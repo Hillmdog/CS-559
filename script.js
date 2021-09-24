@@ -5,7 +5,31 @@ function setup() {
     slider1.value = 200;
     var slider2 = document.getElementById('slider2');
     slider2.value = 3090;
+    var left = 0;
+    var right = 0;
+    var up = 0;
+    var down = 0;
 
+    function getKeyAndMove() {
+        switch (event.keyCode) {
+        case 37: //left arrow key
+            left = left + 5;
+            draw();
+            break;
+        case 38: //Up arrow key
+            up = up + 5;
+            draw();
+            break;
+        case 39: //right arrow key
+            right = right + 5;
+            draw();
+            break;
+        case 40: //down arrow key
+            down = down + 5;
+            draw();
+            break;
+        }
+    }
     function draw() {
         var context = canvas.getContext('2d');
         canvas.width = canvas.width;
@@ -13,23 +37,23 @@ function setup() {
         var Y = canvas.height / 2;
         var R = slider1.value;
         var hexcolor = parseInt((slider2.value), 10).toString(16);
-	
+
         function DrawBigW(color) {
             context.beginPath();
             context.fillStyle = color;
-            context.moveTo(150,220);
-            context.lineTo(175,220);
-            context.lineTo(230,350);
-            context.lineTo(285,240);
-            context.lineTo(310,240);
-            context.lineTo(365,350);
-            context.lineTo(420,220);
-            context.lineTo(445,220);
-            context.lineTo(377,380);
-            context.lineTo(352,380);
-            context.lineTo(298,265);
-            context.lineTo(241,380);
-            context.lineTo(216,380);
+            context.moveTo(150 + right - left,220 + down - up);
+            context.lineTo(175 + right - left,220 + down - up);
+            context.lineTo(230 + right - left,350 + down - up);
+            context.lineTo(285 + right - left,240 + down - up);
+            context.lineTo(310 + right - left,240 + down - up);
+            context.lineTo(365 + right - left,350 + down - up);
+            context.lineTo(420 + right - left,220 + down - up);
+            context.lineTo(445 + right - left,220 + down - up);
+            context.lineTo(377 + right - left,380 + down - up);
+            context.lineTo(352 + right - left,380 + down - up);
+            context.lineTo(298 + right - left,265 + down - up);
+            context.lineTo(241 + right - left,380 + down - up);
+            context.lineTo(216 + right - left,380 + down - up);
             context.closePath();
             context.fill();
         }
@@ -155,42 +179,7 @@ function setup() {
             return (n.length<2) ? "0"+n : n;
         }
 
-        function getKeyAndMove(e) {
-            var key_code = e.which || e.keyCode;
-            switch (key_code) {
-                case 37: //left arrow key
-                    moveLeft();
-                    break;
-                case 38: //Up arrow key
-                    moveUp();
-                    break;
-                case 39: //right arrow key
-                    moveRight();
-                    break;
-                case 40: //down arrow key
-                    moveDown();
-                    break;
-            }
-        }
-
-        function moveLeft() {
-            obj.style.left = parseInt(obj.style.left) - 5 + "px";
-        }
-
-        function moveUp() {
-            obj.style.top = parseInt(obj.style.top) - 5 + "px";
-        }
-
-        function moveRight() {
-            obj.style.left = parseInt(obj.style.left) + 5 + "px";
-        }
-
-        function moveDown() {
-            obj.style.top = parseInt(obj.style.top) + 5 + "px";
-        }
-
         DrawBigW("#" + pad(hexcolor));
-        obj = document.getElementById("this.context");
         DrawRedC("#" + pad(hexcolor));
         DrawW("#000000");
         DrawALeft("#0099ff");
@@ -201,6 +190,7 @@ function setup() {
     }
     slider1.addEventListener("input",draw);
     slider2.addEventListener("input",draw);
+    window.addEventListener('keydown',getKeyAndMove);
     draw();
 }
 window.onload = setup;
