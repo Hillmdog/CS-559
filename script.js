@@ -9,23 +9,51 @@ function setup() {
     var right = 0;
     var up = 0;
     var down = 0;
+    var rArrow = "#ff0000";
+    var lArrow = "#0099ff";
+    var uArrow = "#ffff00";
+    var dArrow = "#33cc33";
 
     function getKeyAndMove() {
         switch (event.keyCode) {
         case 37: //left arrow key
+            lArrow = "#004d80";
             left = left + 5;
             draw();
             break;
         case 38: //Up arrow key
+            uArrow = "#808000";
             up = up + 5;
             draw();
             break;
         case 39: //right arrow key
+            rArrow = "#800000";
             right = right + 5;
             draw();
             break;
         case 40: //down arrow key
+            dArrow = "#196619";
             down = down + 5;
+            draw();
+            break;
+        }
+    }
+    function ChangeColor() {
+        switch (event.keyCode) {
+        case 37: //left arrow key
+            lArrow = "#0099ff";
+            draw();
+            break;
+        case 38: //Up arrow key
+            uArrow = "#ffff00";
+            draw();
+            break;
+        case 39: //right arrow key
+            rArrow = "#ff0000";
+            draw();
+            break;
+        case 40: //down arrow key
+            dArrow = "#33cc33";
             draw();
             break;
         }
@@ -182,15 +210,16 @@ function setup() {
         DrawBigW("#" + pad(hexcolor));
         DrawRedC("#" + pad(hexcolor));
         DrawW("#000000");
-        DrawALeft("#0099ff");
-        DrawARight("#ff0000");
-        DrawAUp("#ffff00");
-        DrawADown("#33cc33");
+        DrawALeft(lArrow);
+        DrawARight(rArrow);
+        DrawAUp(uArrow);
+        DrawADown(dArrow);
         DrawInt("#990000");
     }
     slider1.addEventListener("input",draw);
     slider2.addEventListener("input",draw);
     window.addEventListener('keydown',getKeyAndMove);
+    window.addEventListener('keyup',ChangeColor);
     draw();
 }
 window.onload = setup;
