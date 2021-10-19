@@ -1,4 +1,4 @@
-# CS-559
+## CS-559
 This repo is populated with home work assiegments from CS559(Graphics in JS)
 # HW1
 Basic JS graphics: Sliders, Color Changing, key input
