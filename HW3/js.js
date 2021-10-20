@@ -1,70 +1,51 @@
 function setup() {
     var canvas = document.getElementById("myCanvas");
-    var range = document.getElementById("slider");
-    var t = 0;
+    var dx = 0;
 
     var context = canvas.getContext("2d");
     var stack;
 
-
-    //draw a trunk of a bamboo
-    function trunk(){
+	function getKeyAndMove() {
+        switch (event.keyCode) {
+        case 37: //left arrow key
+            dx = dx - 5;
+	    draw();
+            break;
+        case 39: //right arrow key
+            dx = dx + 5;
+	    draw();
+            break;
+        }
+    }
+    function rect(x,y,w,h,C){
         context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
-        context.fillStyle = "#95b391";
-        context.fillRect(460,380,80,100);
+        context.fillStyle = C;
+        context.fillRect(x,y,w,h);
     }
 
     function draw(){
-        window.requestAnimationFrame(draw);
+        //window.requestAnimationFrame(draw);
         stack =[mat3.create()];
         canvas.width=canvas.width;
 
-
-        //prepare the context for drawing a trunk
-        function trunkTrans(){
+        function Guy(){
             var tx = mat3.create();
-            var theta = Math.PI/36*t;
-            mat3.fromTranslation(tx,[500,480-110]);//context.translate(500,480-110);
-            mat3.rotate(tx,tx,theta);//context.rotate(Math.PI/36*t);
-            mat3.translate(tx,tx,[-500,-480]);//context.translate(-500,-480);
+            mat3.fromTranslation(tx,[500,450]);
+            mat3.translate(tx,tx,[-500 + dx,-450]);
             mat3.multiply(stack[0],stack[0],tx);
-        }
-
-
-        //draw a bamboo
-        function bamboo(){
-            //draw bottom trunk
-            var tx = mat3.create();
-            var theta = Math.PI/36*t;
-            mat3.fromTranslation(tx,[500,480]);//context.translate(500,480);
-            mat3.rotate(tx,tx,theta);//context.rotate(Math.PI/36*t);
-            mat3.translate(tx,tx,[-500,-480]);//context.translate(-500,-480);
-            mat3.multiply(stack[0],stack[0],tx);
-            trunk();
-
-            //draw mid-bottom trunk
-            trunkTrans();
-            trunk();
-
-            //draw mid-top trunk
-            trunkTrans();
-            trunk();
-
-
-            //draw top trunk
-            trunkTrans();
-            trunk();
+            rect(450,450,100,100, "#4d4d4d");
 
         }
-
-        //draw three bamboos
+	rect(0,0,canvas.width,canvas.height, "#cceeff");
+	rect(0,550,canvas.width,50,"#86592d");
+	rect(0,550,canvas.width,10,"#339933");
         stack.unshift(mat3.clone(stack[0]));//context.save();
-        bamboo();
+        Guy();
         stack.shift();//context.restore();
 
     }
     draw();
-    range.addEventListener("input", clearUpdate);
+    window.addEventListener('keydown',getKeyAndMove);
 }
 
 window.onload=setup;
