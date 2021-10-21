@@ -10,14 +10,24 @@ function setup() {
 	function getKeyAndMove() {
         switch (event.keyCode) {
         case 37: //left arrow key
-            dx = dx - 10;
-            dir = 0;
-	    draw();
+            if(dx <= -450){
+                draw();
+            }
+            else{
+                dx = dx - 10;
+                dir = 0;
+                draw();
+	        }
             break;
         case 39: //right arrow key
-            dx = dx + 10;
-            dir = 1;
-	    draw();
+            if(dx >= 490){
+                draw();
+            }
+            else{
+                dx = dx + 10;
+                dir = 1;
+                draw();
+	        }
             break;
         }
     }
