@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>HW3 Matthew Hillmer</title>
-  </head>
-  <body>
-    <canvas id="myCanvas" width="1000" height="600"></canvas>
-    <script type="text/javascript" src="gl-matrix-min.js"></script>
-    <script src="js.js" id="module"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HW3 Matthew Hillmer</title>
+  <style>
+        body {
+        background: rgb(230, 230, 230)
+        }
+
+        //grabbed from w3 schools to make nicer sliders-edited to my preferences
+        .slidecontainer {
+            width: 100%;
+        }
+         .slider {
+        -webkit-appearance: none;
+        width: 25%;
+        height: 3px;
+        background: #666666;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+        }
+        .slider:hover {
+        opacity: 2;
+        }
+        .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        background: #0099ff;
+        }
+
+</style>
+</head>
+<body>
+<canvas id="myCanvas"
+        width="1000" height="600">
+</canvas>
+</br>
+<script src="js.js" id="module"></script>
+<script type="text/javascript" src="gl-matrix-min.js"></script>
+</body>
 </html>
