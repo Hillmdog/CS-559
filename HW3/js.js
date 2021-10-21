@@ -1,4 +1,4 @@
-function setup() {
+function game() {
     var canvas = document.getElementById("myCanvas");
     canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
     var dx = 0;
@@ -83,5 +83,8 @@ function setup() {
     draw();
     window.addEventListener('keydown',getKeyAndMove);
 }
-
+function setup(){
+    var canvas = document.getElementById("myCanvas");
+    canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
+}
 window.onload=setup;
