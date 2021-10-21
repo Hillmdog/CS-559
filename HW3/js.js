@@ -7,30 +7,23 @@ function game() {
     var context = canvas.getContext("2d");
     var stack;
 
-	function getKeyAndMove() {
+    function getKeyAndMove() {
         switch (event.keyCode) {
         case 37: //left arrow key
-            if(dx <= -450){
-                draw();
-            }
-            else{
+            if(dx > -450){
                 dx = dx - 10;
                 dir = 0;
-                draw();
-	        }
+            }
             break;
         case 39: //right arrow key
-            if(dx >= 490){
-                draw();
-            }
-            else{
+            if(dx < 490){
                 dx = dx + 10;
                 dir = 1;
-                draw();
-	        }
+            }
             break;
         }
     }
+
     function rect(x,y,w,h,C){
         context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
         context.fillStyle = C;
@@ -38,7 +31,7 @@ function game() {
     }
 
     function draw(){
-        //window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(draw);
         stack =[mat3.create()];
         canvas.width=canvas.width;
 
@@ -72,9 +65,9 @@ function game() {
         }
 
 
-	    rect(0,0,canvas.width,canvas.height, "#cceeff");
-	    rect(0,550,canvas.width,50,"#86592d");
-	    rect(0,550,canvas.width,10,"#339933");
+	rect(0,0,canvas.width,canvas.height, "#cceeff");
+	rect(0,550,canvas.width,50,"#86592d");
+	rect(0,550,canvas.width,10,"#339933");
         stack.unshift(mat3.clone(stack[0]));//context.save();
         Guy();
         stack.shift();//context.restore();
