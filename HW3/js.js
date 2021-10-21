@@ -3,6 +3,9 @@ function game() {
     canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
     var dx = 0;
     var dir = 0;
+    var rArrow = "#ff0000";
+    var lArrow = "#0099ff";
+    var theta = Math.PI/36*0;
 
     var context = canvas.getContext("2d");
     var stack;
@@ -13,13 +16,25 @@ function game() {
             if(dx > -450){
                 dx = dx - 10;
                 dir = 0;
+		lArrow = "#004d80";
             }
             break;
         case 39: //right arrow key
             if(dx < 490){
                 dx = dx + 10;
                 dir = 1;
+		rArrow = "#800000";
             }
+            break;
+        }
+    }
+    function ChangeColor() {
+        switch (event.keyCode) {
+        case 37: //left arrow key
+            lArrow = "#0099ff";
+            break;
+        case 39: //right arrow key
+            rArrow = "#ff0000";
             break;
         }
     }
@@ -64,10 +79,46 @@ function game() {
             }
         }
 
+	function DrawLArrow(color) {
+            context.beginPath();
+            context.fillStyle = color;
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.moveTo(10,60);
+            context.lineTo(20,80);
+            context.lineTo(20,70);
+            context.lineTo(40,70);
+            context.lineTo(40,50);
+            context.lineTo(20,50);
+            context.lineTo(20,40);
+            context.closePath();
+            context.stroke();
+            context.fill();
+        }
+	function DrawRArrow(color) {
+            context.beginPath();
+            context.fillStyle = color;
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.moveTo(110,60);
+            context.lineTo(100,40);
+            context.lineTo(100,50);
+            context.lineTo(80,50);
+            context.lineTo(80,70);
+            context.lineTo(100,70);
+            context.lineTo(100,80);
+            context.closePath();
+            context.stroke();
+            context.fill();
+        }
+
+
 
 	rect(0,0,canvas.width,canvas.height, "#cceeff");
 	rect(0,550,canvas.width,50,"#86592d");
 	rect(0,550,canvas.width,10,"#339933");
+	DrawLArrow(lArrow);
+	DrawRArrow(rArrow);
         stack.unshift(mat3.clone(stack[0]));//context.save();
         Guy();
         stack.shift();//context.restore();
@@ -75,6 +126,7 @@ function game() {
     }
     draw();
     window.addEventListener('keydown',getKeyAndMove);
+    window.addEventListener('keyup',ChangeColor);
 }
 function setup(){
     var canvas = document.getElementById("myCanvas");
