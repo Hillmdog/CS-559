@@ -214,8 +214,18 @@ function game() {
 		context.fill();
 	    }
 	}
+	
+	function stars(){
+    		for(var i=0;i<50;i++){
+		context.beginPath();
+      		context.arc(Math.random()*1000,Math.random()*600, 1+Math.random(), 0, Math.PI*2, true);
+		context.fillStyle = "#ffff99";
+		context.fill();
+		}
+	}
 
 	rect(0,0,canvas.width,canvas.height, sky);
+	stars();
 	stack.unshift(mat3.clone(stack[0]));//context.save();
 	mat3.translate(stack[0],stack[0],[700,-50]);
 	sunMoon();
