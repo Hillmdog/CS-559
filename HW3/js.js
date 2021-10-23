@@ -3,6 +3,7 @@ function game() {
     canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
     var dx = 0;
     var dy = 0;
+    var dx2 = 0;
     var dir = 0;
     var sky = "#cceeff";
     var tod = 0;
@@ -103,6 +104,7 @@ function game() {
         window.requestAnimationFrame(draw);
         stack =[mat3.create()];
         canvas.width=canvas.width;
+	dx2 = moveClouds(dx2);
 
 	function Guy(){
             var tx = mat3.create();
@@ -223,13 +225,50 @@ function game() {
 		context.fill();
 		}
 	}
+	
+	function clouds(){
+	    context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+	    	context.beginPath();
+		context.lineWidth = 3;
+		context.fillStyle = '#d9d9d9';
+		context.strokeStyle = '#808080';
+		context.moveTo(170, 80);
+		context.bezierCurveTo(130, 100, 130, 150, 230, 150);
+		context.bezierCurveTo(250, 180, 320, 180, 340, 150);
+		context.bezierCurveTo(420, 150, 420, 120, 390, 100);
+		context.bezierCurveTo(430, 40, 370, 30, 340, 50);
+		context.bezierCurveTo(320, 5, 250, 20, 250, 50);
+		context.bezierCurveTo(200, 5, 150, 20, 170, 80);
+		context.closePath();
+		context.fill();
+		context.stroke();
+	}
+    function moveClouds(dx2){
+            if (dx2>1100) {
+                dx2 = -750;
+            } else {
+                dx2 = dx2 + 1.5;
+            }
+        return dx2
+    }
 
 	rect(0,0,canvas.width,canvas.height, sky);
-	stars();
+	if(tod == 1){stars();}
 	stack.unshift(mat3.clone(stack[0]));//context.save();
 	mat3.translate(stack[0],stack[0],[700,-50]);
 	sunMoon();
 	stack.shift();//context.restore();
+	if(tod == 0){
+	stack.unshift(mat3.clone(stack[0]));//context.save();
+	mat3.translate(stack[0],stack[0],[dx2,0]);
+	clouds();
+	mat3.translate(stack[0],stack[0],[500,100]);
+	mat3.scale(stack[0],stack[0],[0.5,.5]);
+	clouds();
+	mat3.translate(stack[0],stack[0],[-1200,-50]);
+	clouds();
+	stack.shift();//context.restore();
+	}
 	//ground
 	rect(0,550,canvas.width,50,"#86592d");
 	rect(700,300,300,300,"#86592d");
@@ -257,7 +296,7 @@ function game() {
 	DrawDArrow(dArrow);
 	//index key guy
         stack.unshift(mat3.clone(stack[0]));//context.save();
-	mat3.scale(stack[0],stack[0],[0.3,.3]);//context.scale(0.9,1);
+	mat3.scale(stack[0],stack[0],[0.3,.3]);
 	mat3.translate(stack[0],stack[0],[-281,-303]);
 	Guy();
         stack.shift();//context.restore();
