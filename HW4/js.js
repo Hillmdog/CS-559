@@ -1,5 +1,6 @@
 function setup() {
     var canvas = document.getElementById('myCanvas');
+     var checkBox = document.getElementById("myCheck")
     var ctx = canvas.getContext('2d');
     var t = 0
     var dy = 0;
@@ -43,7 +44,9 @@ function setup() {
         }
         ocean();
         ctx.translate(0,dy);
-        bubble();
+        if (checkBox.checked == true){
+            bubble();
+        }
         var arrowCanvas = mat3.create();
         var tangent = CTcomp(t);
     }
