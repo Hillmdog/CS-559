@@ -6,5 +6,5 @@ Sliders, Color Changing, key input
 Stack and animation 
 ### HW3- Exploration Mini Game
 Stack and animation using Glmatrix
-### HW4- Under the Sea
+### HW4- Underwater scean
 Stack and animation using Glmatrix with cubic curves
