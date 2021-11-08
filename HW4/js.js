@@ -5,12 +5,17 @@ function setup() {
     var t = 0
     var dy = 0;
     var dx = 0;
+    var speed = 0;
     var b = 200;
     var bubbles = [];
+    var bubbles2 = [];
     for(var i=0;i<b;i++){
         bubbles.push({x:Math.random()*1000,
-                y:Math.floor(Math.random() * (2000 - 630 + 1)) + 630,
+                y:Math.floor(Math.random() * (1000 - 630 + 1)) + 630, dy:0,
                 r:Math.floor(Math.random() * (15 - 5 + 1)) + 5});
+        bubbles2.push({x:Math.random()*1000,
+                        y:Math.floor(Math.random() * (1000 - 630 + 1)) + 630, dy:0,
+                        r:Math.floor(Math.random() * (15 - 5 + 1)) + 5});
     }
     function draw() {
             window.requestAnimationFrame(draw);
@@ -41,33 +46,60 @@ function setup() {
             image.src = 'shark.png';
             ctx.drawImage(image, -420, 300, 400, 200);
         }
-        function bubble(){
+        function bubble(z){
             ctx.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
-            for(var i=0;i<b;i++){
-               var bubbleAt = bubbles[i];
-               ctx.beginPath();
-               ctx.arc(bubbleAt.x, bubbleAt.y, bubbleAt.r, 0, 2 * Math.PI);
-               ctx.lineWidth = 1;
-               ctx.strokeStyle = "white";
-               ctx.stroke();
-               ctx.beginPath();
-               ctx.arc(bubbleAt.x, bubbleAt.y, bubbleAt.r-3, 1*Math.PI, 1.5 * Math.PI);
-               ctx.stroke();
+            if(z == 1){
+                for(var i=0;i<b;i++){
+                    var bubbleAt = bubbles[i];
+                    if(bubbleAt.dy > 1000){
+                        bubbleAt.dy = 0;
+                    }
+                    else{
+                    bubbleAt.dy = bubbleAt.dy + 10/bubbleAt.r;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(bubbleAt.x, (bubbleAt.y - bubbleAt.dy), bubbleAt.r, 0, 2 * Math.PI);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = "#4dc3ff";
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(bubbleAt.x, (bubbleAt.y - bubbleAt.dy), bubbleAt.r-4, 1*Math.PI, 1.5 * Math.PI);
+                    ctx.stroke();
+                }
+            }
+            else{
+                for(var i=0;i<b;i++){
+                    var bubbleAt = bubbles2[i];
+                    if(bubbleAt.dy > 1000){
+                        bubbleAt.dy = 0;
+                    }
+                    else{
+                    bubbleAt.dy = bubbleAt.dy + 10/bubbleAt.r;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(bubbleAt.x, (bubbleAt.y - bubbleAt.dy), bubbleAt.r, 0, 2 * Math.PI);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = "#4dc3ff";
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(bubbleAt.x, (bubbleAt.y - bubbleAt.dy), bubbleAt.r-4, 1*Math.PI, 1.5 * Math.PI);
+                    ctx.stroke();
+                }
             }
         }
         ocean();
         var tx = mat3.create();
         stack.unshift(mat3.clone(stack[0]));//context.save();
+        bubble(0);
+        stack.shift();//context.restore();
+        stack.unshift(mat3.clone(stack[0]));//context.save();
         mat3.translate(stack[0],stack[0],[dx,0]);
         shark();
         stack.shift();//context.restore();
-        mat3.translate(stack[0],stack[0],[0,dy]);
-        //ctx.translate(0,dy);
+        var bubb = mat3.create();
         if (checkBox.checked == false){
-            bubble();
+            bubble(1);
         }
-        var arrowCanvas = mat3.create();
-        var tangent = CTcomp(t);
     }
     draw();
 }
