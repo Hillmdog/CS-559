@@ -12,10 +12,10 @@ function setup() {
     for(var i=0;i<b;i++){
         bubbles.push({x:Math.random()*1000,
                 y:Math.floor(Math.random() * (1000 - 630 + 1)) + 630, dy:0,
-                r:Math.floor(Math.random() * (15 - 5 + 1)) + 5});
+                r:Math.floor(Math.random() * (15 - 4 + 1)) + 4});
         bubbles2.push({x:Math.random()*1000,
                         y:Math.floor(Math.random() * (1000 - 630 + 1)) + 630, dy:0,
-                        r:Math.floor(Math.random() * (15 - 5 + 1)) + 5});
+                        r:Math.floor(Math.random() * (15 - 4 + 1)) + 4});
     }
     function draw() {
             window.requestAnimationFrame(draw);
@@ -31,7 +31,7 @@ function setup() {
                 dx = dx + .5;
             }
             else{
-                dx = -220
+                dx = -100
             }
         function ocean(){
             var grd = ctx.createLinearGradient(0, 0, 0, 500);
@@ -96,9 +96,9 @@ function setup() {
         mat3.translate(stack[0],stack[0],[dx,0]);
         shark();
         stack.shift();//context.restore();
-        var bubb = mat3.create();
+        bubble(1);
         if (checkBox.checked == false){
-            bubble(1);
+
         }
     }
     draw();
