@@ -18,20 +18,15 @@ function setup() {
                         r:Math.floor(Math.random() * (15 - 4 + 1)) + 4});
     }
     //kelp
+    var k = 30;
+    var kelp = [];
+    for(var j=0;j<k;j++){
+    kelp.push({x:Math.floor(((Math.random() * (6 - 1 + 1)) + 1)*10),
+        y:Math.floor(((Math.random() * (25 - 5 + 1)) + 5)*10)});
+    }
     var tParam = 0;
-
-    var p0=[0,-20,0];
-    var d0=[-100,50,0];
-    var p1=[0,100,0];
-    var d1=[-100,0,0];
-    var p2=[0,200,0];
-    var d2=[-100,0,0];
-    var p3=[0,300,0];
-    var d3=[-100,0,0];
-
-    var P0 = [p0,d0,p1,d1]; // First two points and tangents
-    var P1 = [p1,d1,p2,d2]; // Second two points and tangents
-    var P2 = [p2,d2,p3,d3]; // Second two points and tangents
+    var wave = 100;
+    var dir = 0;
     function draw() {
         window.requestAnimationFrame(draw);
         stack =[mat3.create()];
@@ -109,6 +104,30 @@ function setup() {
         else{
             tParam = tParam + .001;
         }
+        if(wave <= 150 && wave> 50 && dir == 1){
+            wave = wave - .5;
+        }
+        else{
+            dir = 0;
+        }
+        if(wave >= 50 && wave< 150 && dir == 0){
+            wave = wave + .5;
+        }
+        else{
+            dir = 1;
+        }
+        var p0=[0,-20,0];
+        var d0=[-wave,50,0];
+        var p1=[0,100,0];
+        var d1=[-wave,0,0];
+        var p2=[0,200,0];
+        var d2=[-wave,0,0];
+        var p3=[0,300,0];
+        var d3=[-wave,0,0];
+
+        var P0 = [p0,d0,p1,d1]; // First two points and tangents
+        var P1 = [p1,d1,p2,d2]; // Second two points and tangents
+        var P2 = [p2,d2,p3,d3]; // Second two points and tangents
         function moveToTx(loc,Tx){
             var res=vec3.create(); vec3.transformMat4(res,loc,Tx); ctx.moveTo(res[0],res[1]);
         }
@@ -214,13 +233,17 @@ function setup() {
             mat4.multiply(Tgreen_to_canvas, Tblue_to_canvas, Tgreen_to_blue);
             drawObject("black",Tgreen_to_canvas);
         }
-        mat4.translate(Tblue_to_canvas,Tblue_to_canvas,[50,0,0])
-        drawTrajectory(0.0,1.0,100,C0,Tblue_to_canvas,kelpC,20);
-        drawTrajectory(0.0,1.0,100,C1,Tblue_to_canvas,kelpC,20);
-        drawTrajectory(0.0,1.0,100,C2,Tblue_to_canvas,kelpC,20);
-        drawTrajectory(0.0,1.0,100,C0,Tblue_to_canvas,kelpC2,1);
-        drawTrajectory(0.0,1.0,100,C1,Tblue_to_canvas,kelpC2,1);
-        drawTrajectory(0.0,1.0,100,C2,Tblue_to_canvas,kelpC2,1);
+        for(var i=0;i<k;i++){
+            var kelpAt = kelp[i];
+            mat4.translate(Tblue_to_canvas,Tblue_to_canvas,[kelpAt.x,-kelpAt.y,0]);
+            drawTrajectory(0.0,1.0,100,C0,Tblue_to_canvas,kelpC,20);
+            drawTrajectory(0.0,1.0,100,C1,Tblue_to_canvas,kelpC,20);
+            drawTrajectory(0.0,1.0,100,C2,Tblue_to_canvas,kelpC,20);
+            drawTrajectory(0.0,1.0,100,C0,Tblue_to_canvas,kelpC2,1);
+            drawTrajectory(0.0,1.0,100,C1,Tblue_to_canvas,kelpC2,1);
+            drawTrajectory(0.0,1.0,100,C2,Tblue_to_canvas,kelpC2,1);
+            mat4.translate(Tblue_to_canvas,Tblue_to_canvas,[0,kelpAt.y,0])
+        }
 
         var tx = mat3.create();
         stack.unshift(mat3.clone(stack[0]));//context.save();
