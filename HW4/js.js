@@ -120,10 +120,10 @@ function setup() {
         var d0=[-wave,50,0];
         var p1=[0,100,0];
         var d1=[-wave,0,0];
-        var p2=[0,200,0];
-        var d2=[-wave,0,0];
-        var p3=[0,300,0];
-        var d3=[-wave,0,0];
+        var p2=[(wave/8),200,0];
+        var d2=[-wave,100,0];
+        var p3=[(wave/4),300,0];
+        var d3=[-wave,200,0];
 
         var P0 = [p0,d0,p1,d1]; // First two points and tangents
         var P1 = [p1,d1,p2,d2]; // Second two points and tangents
@@ -258,3 +258,4 @@ function setup() {
     draw();
 }
 window.onload = setup;
+
