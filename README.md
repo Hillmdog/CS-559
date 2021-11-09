@@ -1,7 +1,7 @@
 # CS-559
 This repo is populated with home work assiegments from CS559(Graphics in JS/HTML)
 ### HW1- Basic JS graphics
-Sliders, Color Changing, key input
+Sliders, Color Changing, keyboard input
 ### HW2- Farm Scene
 Stack and animation 
 ### HW3- Exploration Mini Game
