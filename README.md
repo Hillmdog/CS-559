@@ -1,5 +1,5 @@
 # CS-559
-This repo is populated with home work assiegments from CS559(Graphics in JS)
+This repo is populated with home work assiegments from CS559(Graphics in JS/HTML)
 ### HW1- Basic JS graphics
 Sliders, Color Changing, key input
 ### HW2- Farm Scene
