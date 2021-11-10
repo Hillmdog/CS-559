@@ -127,7 +127,7 @@ function setup() {
 
         var P0 = [p0,d0,p1,d1]; // First two points and tangents
         var P1 = [p1,d1,p2,d2]; // Second two points and tangents
-        var P2 = [p2,d2,p3,d3]; // Second two points and tangents
+        var P2 = [p2,d2,p3,d3]; // Third two points and tangents
         function moveToTx(loc,Tx){
             var res=vec3.create(); vec3.transformMat4(res,loc,Tx); ctx.moveTo(res[0],res[1]);
         }
@@ -244,7 +244,7 @@ function setup() {
             drawTrajectory(0.0,1.0,100,C2,Tblue_to_canvas,kelpC2,1);
             mat4.translate(Tblue_to_canvas,Tblue_to_canvas,[0,kelpAt.y,0])
         }
-
+	//bubbles and shark
         var tx = mat3.create();
         stack.unshift(mat3.clone(stack[0]));//context.save();
         bubble(0);
@@ -258,4 +258,3 @@ function setup() {
     draw();
 }
 window.onload = setup;
-
