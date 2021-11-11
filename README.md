@@ -3,10 +3,10 @@ This repo is populated with home work assiegments from CS559(Graphics in JS/HTML
 ### HW1- Basic JS graphics
 Sliders, Color Changing, keyboard input
 ### HW2- Farm Scene
-Stack and animation 
+hierarchical model and animation 
 ### HW3- Exploration Mini Game
-Stack and animation using Glmatrix
+hierarchical model and animation using Glmatrix
 ### HW4- Underwater scene
-Stack and animation using Glmatrix with cubic curves
+Cubic curves using hierarchical model,animation, and Glmatrix
 ### HW5- TBD
-Stack and animation using Glmatrix with cubic curves
+3D animation using Glmatrix(cubic curves, hierarchical model, movable camera, animation)
