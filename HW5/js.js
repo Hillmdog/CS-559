@@ -1,6 +1,7 @@
 function setup() {
     var cameraCanvas = document.getElementById('myCanvas');
     var cameraContext = cameraCanvas.getContext('2d');
+    var checkBox = document.getElementById("myCheck")
     var context = cameraContext; // default to drawing in the camera window
     var t = 0;
 
@@ -226,7 +227,9 @@ function setup() {
 
     // Draw the following in the Camera window
     context = cameraContext;
+    if (checkBox.checked == true){
 	draw3DAxes("grey",tVP_PROJ_VIEW_Camera,100.0);
+    }
     // drawUpVector("orange",upCamera,tVP_PROJ_VIEW_Camera,1.0);
 	drawTrajectory(0.0,1.0,100,C0,tVP_PROJ_VIEW_Camera,"red");
     drawTrajectory(0.0,1.0,100,C1,tVP_PROJ_VIEW_Camera,"blue");
@@ -237,4 +240,3 @@ function setup() {
     draw();
 }
 window.onload = setup;
-
