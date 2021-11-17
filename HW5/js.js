@@ -63,6 +63,35 @@ function setup() {
 	    context.stroke();
 	}
 
+    function drawCube(color,TxU,scale) {
+        var Tx = mat4.clone(TxU);
+        mat4.scale(Tx,Tx,[scale,scale,scale]);
+        context.strokeStyle=color;
+        context.fillStyle=color;
+
+        context.beginPath();
+        // Axes
+        moveToTx([0,0,0],Tx);
+        lineToTx([50,0,0],Tx);
+        lineToTx([50,50,0],Tx);
+        lineToTx([0,50,0],Tx);
+        lineToTx([0,0,0],Tx);
+
+        moveToTx([0,0,50],Tx);
+        lineToTx([50,0,50],Tx);
+        lineToTx([50,50,50],Tx);
+        lineToTx([0,50,50],Tx);
+        lineToTx([0,0,50],Tx);
+
+        moveToTx([0,0,50],Tx);
+        lineToTx([50,0,50],Tx);
+        lineToTx([50,50,50],Tx);
+        lineToTx([0,50,50],Tx);
+        lineToTx([0,0,50],Tx);
+        context.fill()
+        context.stroke();
+    }
+
 
     function drawUpVector(color,vecUp,Tx) {
 	    context.strokeStyle=color;
@@ -160,7 +189,7 @@ function setup() {
     // and one for the "external observer"
 
     // Create Camera (lookAt) transform
-     var eyeCamera = CameraCurve(viewAngle);
+    var eyeCamera = CameraCurve(viewAngle);
     var targetCamera = vec3.fromValues(0,0,0); // Aim at the origin of the world coords
     var upCamera = vec3.fromValues(0,100,0); // Y-axis of world coords to be vertical
 	var TlookAtCamera = mat4.create();
@@ -175,15 +204,13 @@ function setup() {
 
     // Create ViewPort transform (assumed the same for both canvas instances)
     var Tviewport = mat4.create();
-	mat4.fromTranslation(Tviewport,[200,300,0]);  // Move the center of the
+	mat4.fromTranslation(Tviewport,[400,400,0]);  // Move the center of the
                                                   // "lookAt" transform (where
                                                   // the camera points) to the
                                                   // canvas coordinates (200,300)
-	mat4.scale(Tviewport,Tviewport,[100,-100,1]); // Flip the Y-axis,
+	mat4.scale(Tviewport,Tviewport,[150,-150,1]); // Flip the Y-axis,
                                                   // scale everything by 100x
     // make sure you understand these
-
-    context = cameraContext;
 
     // Create Camera projection transform
     // (orthographic for now)
@@ -230,6 +257,7 @@ function setup() {
     if (checkBox.checked == true){
 	draw3DAxes("grey",tVP_PROJ_VIEW_Camera,100.0);
     }
+    drawCube("grey",tVP_PROJ_VIEW_Camera,1);
     // drawUpVector("orange",upCamera,tVP_PROJ_VIEW_Camera,1.0);
 	drawTrajectory(0.0,1.0,100,C0,tVP_PROJ_VIEW_Camera,"red");
     drawTrajectory(0.0,1.0,100,C1,tVP_PROJ_VIEW_Camera,"blue");
