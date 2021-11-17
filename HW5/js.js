@@ -2,6 +2,7 @@ function setup() {
     var cameraCanvas = document.getElementById('myCanvas');
     var cameraContext = cameraCanvas.getContext('2d');
     var checkBox = document.getElementById("myCheck")
+    var checkBox2 = document.getElementById("myCheck2")
     var context = cameraContext; // default to drawing in the camera window
     var t = 0;
 
@@ -83,12 +84,23 @@ function setup() {
         lineToTx([0,50,50],Tx);
         lineToTx([0,0,50],Tx);
 
-        moveToTx([0,0,50],Tx);
+        moveToTx([0,0,0],Tx);
+        lineToTx([0,0,50],Tx);
+        lineToTx([0,50,50],Tx);
+        lineToTx([0,50,0],Tx);
+        lineToTx([0,0,0],Tx);
+
+        moveToTx([0,0,0],Tx);
+        lineToTx([0,0,50],Tx);
+        lineToTx([50,0,50],Tx);
+        lineToTx([50,0,0],Tx);
+        lineToTx([0,0,0],Tx);
+
+        moveToTx([50,0,0],Tx);
         lineToTx([50,0,50],Tx);
         lineToTx([50,50,50],Tx);
-        lineToTx([0,50,50],Tx);
-        lineToTx([0,0,50],Tx);
-        context.fill()
+        lineToTx([50,50,0],Tx);
+        lineToTx([50,0,0],Tx);
         context.stroke();
     }
 
@@ -258,11 +270,13 @@ function setup() {
 	draw3DAxes("grey",tVP_PROJ_VIEW_Camera,100.0);
     }
     drawCube("grey",tVP_PROJ_VIEW_Camera,1);
+    if (checkBox2.checked == true){
     // drawUpVector("orange",upCamera,tVP_PROJ_VIEW_Camera,1.0);
 	drawTrajectory(0.0,1.0,100,C0,tVP_PROJ_VIEW_Camera,"red");
     drawTrajectory(0.0,1.0,100,C1,tVP_PROJ_VIEW_Camera,"blue");
     // draw3DAxes("green", tVP_PROJ_VIEW_MOD_Camera,100.0); // Uncomment to see "model" coords
     drawObject("green",tVP_PROJ_VIEW_MOD_Camera,100.0);
+    }
     window.requestAnimationFrame(draw);
     }
     draw();
