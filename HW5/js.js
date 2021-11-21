@@ -200,10 +200,9 @@ function setup() {
 	mat4.scale(Tviewport,Tviewport,[150,-150,1]); // Flip the Y-axis,
 
     // Create Camera projection transform
-    // (orthographic for now)
+    // orthographic
     var TprojectionCamera = mat4.create();
     mat4.ortho(TprojectionCamera,-100,100,-100,100,-1,1);
-    //mat4.perspective(TprojectionCamera,Math.PI/4,1,-1,1); // Use for perspective teaser!
 
     // Create transform t_VP_PROJ_CAM that incorporates
     // Viewport, projection and camera transforms
