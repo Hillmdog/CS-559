@@ -8,5 +8,5 @@ hierarchical model and animation
 hierarchical model and animation using Glmatrix
 ### HW4- Underwater scene
 Cubic curves using hierarchical model,animation, and Glmatrix
-### HW5- 3-D Cube Environment
+### HW5- 3D Cube Environment
 3D animation using Glmatrix(cubic curves, hierarchical model, movable camera, animation)
