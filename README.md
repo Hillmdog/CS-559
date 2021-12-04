@@ -10,3 +10,5 @@ hierarchical model and animation using Glmatrix
 Cubic curves using hierarchical model,animation, and Glmatrix
 ### HW5- 3D Cube Environment
 3D animation using Glmatrix(cubic curves, hierarchical model, movable camera, animation)
+### HW6- Vector and Fragment Shaders 
+Vector and Fragment Shaders using http://shdr.bkcore.com/
