@@ -1,3 +1,73 @@
+function start(){
+    var canvas = document.getElementById("myCanvas");
+    canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
+    var ctx = canvas.getContext("2d");
+    var stack;
+
+    function rect(x,y,w,h,C){
+        ctx.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+        ctx.fillStyle = C;
+        ctx.fillRect(x,y,w,h);
+    }
+
+
+
+	function Guy(){
+            var tx = mat3.create();
+            mat3.fromTranslation(tx,[500,450]);
+            mat3.translate(tx,tx,[-500,-450]);
+            mat3.multiply(stack[0],stack[0],tx);
+                rect(450,450,60,80, "#4d4d4d");
+                rect(450,525,25,25, "#cc8800");
+                rect(450,545,25,5, "#000000");
+                rect(485,525,25,25, "#cc8800");
+                rect(485,545,25,5, "#000000");
+                rect(450,510,60,20, "#cc8800");
+                rect(450,510,60,5, "#000000");
+                rect(510,475,25,45, "#cc4400");
+                rect(475,485,20,30, "#333333");
+        }
+
+
+    function draw(){
+    window.requestAnimationFrame(draw);
+    stack =[mat3.create()];
+    canvas.width=canvas.width;
+	rect(0,0,canvas.width,canvas.height, "#cceeff");
+	//ground
+	rect(0,550,canvas.width,50,"#86592d");
+	rect(700,300,300,300,"#86592d");
+	rect(700,300,300,10,"#339933");
+	rect(0,550,760,10,"#339933");
+	//ladder
+	rect(710,295,5,250,"#663300");
+	rect(750,295,5,250,"#663300");
+	rect(708,315,50,5,"#663300");
+	rect(708,335,50,5,"#663300");
+	rect(708,355,50,5,"#663300");
+	rect(708,375,50,5,"#663300");
+	rect(708,395,50,5,"#663300");
+	rect(708,415,50,5,"#663300");
+	rect(708,435,50,5,"#663300");
+	rect(708,455,50,5,"#663300");
+	rect(708,475,50,5,"#663300");
+	rect(708,495,50,5,"#663300");
+	rect(708,515,50,5,"#663300");
+	rect(708,535,50,5,"#663300");
+	Guy();
+	rect(200,50,170,200, "#cc4400");
+	rect(400,50,200,200, "#cc4400");
+	rect(630,50,170,200, "#cc4400");
+	rect(280,80,50,50, "#cceeff");
+	rect(280,170,50,50, "#cceeff");
+	rect(450,100,100,100, "#cceeff");
+	rect(710,80,50,50, "#cceeff");
+	rect(710,170,50,50, "#cceeff");
+    }
+    draw();
+}
+window.onload=start;
+
 function game() {
     var canvas = document.getElementById("myCanvas");
     canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
@@ -23,7 +93,7 @@ function game() {
 		if(dx <= 250 && dy != 250 && dy == 0){
 			dx = dx - 10;
                 	dir = 0;
-			lArrow = "#004d80";	
+			lArrow = "#004d80";
 		}
 		else{
 		    if(dx>250 && dy == -250){
@@ -32,7 +102,7 @@ function game() {
 			lArrow = "#004d80";
 		    }
 		lArrow = "#004d80";
-		}		   
+		}
             }
             break;
         case 39: //right arrow key
@@ -40,7 +110,7 @@ function game() {
 		if(dx < 250 && dy != -250){
 			dx = dx + 10;
                 	dir = 1;
-			rArrow = "#800000";	
+			rArrow = "#800000";
 		}
 		else{
 		    if(dy == -250){
@@ -67,6 +137,16 @@ function game() {
 	    dir = 1;
 	}
 	break;
+    case 32://space bar
+    if(dx == 450){
+        if(tod == 1){
+            tod = 0;
+        }
+        else{
+            tod = 1;
+        }
+    }
+    break;
         }
     }
     function ChangeColor() {
@@ -93,10 +173,6 @@ function game() {
     }
 
     function draw(){
-	if(dx == 450){
-	    sky = "#002233";
-	    tod = 1;
-	}
 	if(dx == -450){
 	    sky = "#cceeff";
 	    tod = 0;
@@ -216,7 +292,7 @@ function game() {
 		context.fill();
 	    }
 	}
-	
+
 	function stars(){
     		for(var i=0;i<50;i++){
 		context.beginPath();
@@ -225,7 +301,7 @@ function game() {
 		context.fill();
 		}
 	}
-	
+
 	function clouds(){
 	    context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
 	    	context.beginPath();
@@ -251,23 +327,31 @@ function game() {
             }
         return dx2
     }
-
-	rect(0,0,canvas.width,canvas.height, sky);
-	if(tod == 1){stars();}
-	stack.unshift(mat3.clone(stack[0]));//context.save();
-	mat3.translate(stack[0],stack[0],[700,-50]);
-	sunMoon();
-	stack.shift();//context.restore();
+	if(tod == 1){
+	    sky = "#002233";
+	    rect(0,0,canvas.width,canvas.height, sky);
+	    stars();
+        stack.unshift(mat3.clone(stack[0]));//context.save();
+        mat3.translate(stack[0],stack[0],[700,-50]);
+        sunMoon();
+        stack.shift();//context.restore();
+	}
 	if(tod == 0){
-	stack.unshift(mat3.clone(stack[0]));//context.save();
-	mat3.translate(stack[0],stack[0],[dx2,0]);
-	clouds();
-	mat3.translate(stack[0],stack[0],[500,100]);
-	mat3.scale(stack[0],stack[0],[0.5,.5]);
-	clouds();
-	mat3.translate(stack[0],stack[0],[-1200,-50]);
-	clouds();
-	stack.shift();//context.restore();
+    	sky = "#cceeff";
+    	rect(0,0,canvas.width,canvas.height, sky);
+        stack.unshift(mat3.clone(stack[0]));//context.save();
+        mat3.translate(stack[0],stack[0],[700,-50]);
+        sunMoon();
+        stack.shift();//context.restore();
+        stack.unshift(mat3.clone(stack[0]));//context.save();
+        mat3.translate(stack[0],stack[0],[dx2,0]);
+        clouds();
+        mat3.translate(stack[0],stack[0],[500,100]);
+        mat3.scale(stack[0],stack[0],[0.5,.5]);
+        clouds();
+        mat3.translate(stack[0],stack[0],[-1200,-50]);
+        clouds();
+        stack.shift();//context.restore();
 	}
 	//ground
 	rect(0,550,canvas.width,50,"#86592d");
@@ -295,87 +379,17 @@ function game() {
 	DrawUArrow(uArrow);
 	DrawDArrow(dArrow);
 	//index key guy
-        stack.unshift(mat3.clone(stack[0]));//context.save();
+    stack.unshift(mat3.clone(stack[0]));//context.save();
 	mat3.scale(stack[0],stack[0],[0.3,.3]);
 	mat3.translate(stack[0],stack[0],[-281,-303]);
 	Guy();
-        stack.shift();//context.restore();
+    stack.shift();//context.restore();
 	//main guy
 	mat3.translate(stack[0],stack[0],[dx,dy]);
-        Guy();
+    Guy();
 
     }
     draw();
     window.addEventListener('keydown',getKeyAndMove);
     window.addEventListener('keyup',ChangeColor);
 }
-
-function start(){
-    var canvas = document.getElementById("myCanvas");
-    canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
-    var ctx = canvas.getContext("2d");
-    var stack;
-
-    function rect(x,y,w,h,C){
-        ctx.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
-        ctx.fillStyle = C;
-        ctx.fillRect(x,y,w,h);
-    }
-
-
-        
-	function Guy(){
-            var tx = mat3.create();
-            mat3.fromTranslation(tx,[500,450]);
-            mat3.translate(tx,tx,[-500,-450]);
-            mat3.multiply(stack[0],stack[0],tx);
-                rect(450,450,60,80, "#4d4d4d");
-                rect(450,525,25,25, "#cc8800");
-                rect(450,545,25,5, "#000000");
-                rect(485,525,25,25, "#cc8800");
-                rect(485,545,25,5, "#000000");
-                rect(450,510,60,20, "#cc8800");
-                rect(450,510,60,5, "#000000");
-                rect(510,475,25,45, "#cc4400");
-                rect(475,485,20,30, "#333333");
-        }
-	
-
-    function draw(){
-        window.requestAnimationFrame(draw);
-        stack =[mat3.create()];
-        canvas.width=canvas.width;
-	rect(0,0,canvas.width,canvas.height, "#cceeff");
-	//ground
-	rect(0,550,canvas.width,50,"#86592d");
-	rect(700,300,300,300,"#86592d");
-	rect(700,300,300,10,"#339933");
-	rect(0,550,760,10,"#339933");
-	//ladder
-	rect(710,295,5,250,"#663300");
-	rect(750,295,5,250,"#663300");
-	rect(708,315,50,5,"#663300");
-	rect(708,335,50,5,"#663300");
-	rect(708,355,50,5,"#663300");
-	rect(708,375,50,5,"#663300");
-	rect(708,395,50,5,"#663300");
-	rect(708,415,50,5,"#663300");
-	rect(708,435,50,5,"#663300");
-	rect(708,455,50,5,"#663300");
-	rect(708,475,50,5,"#663300");
-	rect(708,495,50,5,"#663300");
-	rect(708,515,50,5,"#663300");
-	rect(708,535,50,5,"#663300");
-	Guy();
-	rect(200,50,170,200, "#cc4400");
-	rect(400,50,200,200, "#cc4400");
-	rect(630,50,170,200, "#cc4400");
-	rect(280,80,50,50, "#cceeff");
-	rect(280,170,50,50, "#cceeff");
-	rect(450,100,100,100, "#cceeff");
-	rect(710,80,50,50, "#cceeff");
-	rect(710,170,50,50, "#cceeff");
-    }
-    draw();	
-}
-window.onload=start;
