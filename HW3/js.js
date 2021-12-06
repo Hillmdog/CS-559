@@ -9,9 +9,13 @@ function start(){
         ctx.fillStyle = C;
         ctx.fillRect(x,y,w,h);
     }
-
-
-
+	function circ(x,y,r,s,e, c){
+	    ctx.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+		ctx.fillStyle = c;
+		ctx.beginPath();
+		ctx.arc(x,y,r,s,e);
+		ctx.fill();
+	}
 	function Guy(){
             var tx = mat3.create();
             mat3.fromTranslation(tx,[500,450]);
@@ -38,7 +42,9 @@ function start(){
 	rect(0,550,canvas.width,50,"#86592d");
 	rect(700,300,300,300,"#86592d");
 	rect(700,300,300,10,"#339933");
-	rect(0,550,760,10,"#339933");
+	rect(810, 450, 100, 100, "black");
+	circ(860,450,50,0,2 * Math.PI, "black");
+	rect(0,550,910,10,"#339933");
 	//ladder
 	rect(710,295,5,250,"#663300");
 	rect(750,295,5,250,"#663300");
@@ -172,6 +178,14 @@ function game() {
         context.fillRect(x,y,w,h);
     }
 
+	function circ(x,y,r,s,e, c){
+	    context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+		context.fillStyle = c;
+		context.beginPath();
+		context.arc(x,y,r,s,e);
+		context.fill();
+	}
+	
     function draw(){
 	if(dx == -450){
 	    sky = "#cceeff";
@@ -357,7 +371,9 @@ function game() {
 	rect(0,550,canvas.width,50,"#86592d");
 	rect(700,300,300,300,"#86592d");
 	rect(700,300,300,10,"#339933");
-	rect(0,550,760,10,"#339933");
+	rect(810, 450, 100, 100, "black");
+	circ(860,450,50,0,2 * Math.PI, "black");
+	rect(0,550,910,10,"#339933");
 	//ladder
 	rect(710,295,5,250,"#663300");
 	rect(750,295,5,250,"#663300");
