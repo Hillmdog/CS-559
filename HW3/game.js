@@ -13,7 +13,7 @@ function world() {
     var lArrow = "#0099ff";
     var uArrow = "#ffff00";
     var dArrow = "#33cc33";
-    var ESCP = "#ff0000";
+    var SpaceBar = "#404040";
     var theta = Math.PI/36*0;
 
     var context = canvas.getContext("2d");
@@ -80,6 +80,7 @@ function world() {
                 }
                 break;
                 case 32://space bar
+                SpaceBar = "#1a1a1a";
                 if(dx == 450){
                     if(tod == 1){
                         tod = 0;
@@ -121,6 +122,12 @@ function world() {
                 case 27://esc
                 location.href='intro.html'
                 break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 27://esc
+                location.href='intro.html'
+                break;
             }
         }
     }
@@ -132,13 +139,16 @@ function world() {
         case 39: //right arrow key
             rArrow = "#ff0000";
             break;
-	case 38://up
-	    uArrow = "#ffff00";
-	    break;
-	case 40://down
-	    dArrow = "#33cc33";
-	    break;
-        }
+        case 38://up
+            uArrow = "#ffff00";
+            break;
+        case 40://down
+            dArrow = "#33cc33";
+            break;
+        case 32://space bar
+           SpaceBar = "#404040";
+        break;
+            }
     }
 
     function rect(x,y,w,h,C){
@@ -267,9 +277,13 @@ function world() {
             context.stroke();
             context.fill();
         }
+        function DrawSpace(){
+            context.fillStyle = SpaceBar;
+            context.fillRect(10,570,100,20);
+        }
         function DrawESCP() {
             context.beginPath();
-            context.strokeStyle = ESCP;
+            context.strokeStyle = "#ff0000";
             context.lineWidth = 3;
             //E
             context.moveTo(955,10);
@@ -312,7 +326,11 @@ function world() {
             context.fill();
             }
         }
-
+        function rock(){
+            image = new Image();
+            image.src = 'rock.png';
+            context.drawImage(image, 880, 211, 100, 100);
+        }
         function stars(){
                 for(var i=0;i<50;i++){
             context.beginPath();
@@ -386,6 +404,7 @@ function world() {
             rect(810, 450, 100, 100, "black");
             circ(860,450,50,0,2 * Math.PI, "black");
             rect(0,550,910,10,"#339933");
+            rock();
             //ladder
             rect(710,295,5,250,"#663300");
             rect(750,295,5,250,"#663300");
@@ -407,6 +426,7 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
+            DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -439,12 +459,15 @@ function world() {
         diamond(800,80,"#4a3c30");
         diamond(850,70,"#4a3c30");
         diamond(900,100,"#4a3c30");
+        //groundS
+        rect(0,550,canvas.width,50,"#4a3c30");//bottom
         //arrows
         DrawLArrow(lArrow);
         DrawRArrow(rArrow);
         DrawUArrow(uArrow);
         DrawDArrow(dArrow);
         DrawESCP();
+        DrawSpace();
         //index key guy
         stack.unshift(mat3.clone(stack[0]));//context.save();
         mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -456,7 +479,6 @@ function world() {
         mat3.translate(stack[0],stack[0],[dx,dy]);
         Guy();
         stack.shift();//context.restore();
-        rect(0,550,canvas.width,50,"#4a3c30");//bottom
         }
     }
     draw();
