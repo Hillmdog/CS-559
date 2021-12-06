@@ -95,40 +95,46 @@ function game() {
     function getKeyAndMove() {
         switch (event.keyCode) {
         case 37: //left arrow key
-            if(dx > -450){
-		if(dx <= 250 && dy != 250 && dy == 0){
-			dx = dx - 10;
-                	dir = 0;
-			lArrow = "#004d80";
-		}
-		else{
-		    if(dx>250 && dy == -250){
-			dx = dx - 10;
-			dir = 0;
-			lArrow = "#004d80";
-		    }
-		lArrow = "#004d80";
-		}
+        if(dx > -450){
+            if(dx<= 490 && dy == 0){
+                dx = dx - 10;
+                dir = 0;
+                lArrow = "#004d80";
             }
-            break;
+            if(dx <= 250 && dy != 250 && dy == 0){
+                lArrow = "#004d80";
+            }
+            else{
+                if(dx>250 && dy == -250){
+                dx = dx - 10;
+                dir = 0;
+                lArrow = "#004d80";
+                }
+            lArrow = "#004d80";
+            }
+        }
+        break;
         case 39: //right arrow key
-            if(dx <= 480){
-		if(dx < 250 && dy != -250){
-			dx = dx + 10;
-                	dir = 1;
-			rArrow = "#800000";
-		}
-		else{
-		    if(dy == -250){
-			dx = dx + 10;
-			dir = 1;
-			rArrow = "#800000";
-		    }
-		dir = 1;
-		rArrow = "#800000";
-		}
+        if(dx == 490 && dy == 0){
+        tod = 1;
+        }
+        if(dx <= 490){
+            if(dx < 490 && dy == 0){
+                dx = dx + 10;
+                        dir = 1;
+                rArrow = "#800000";
             }
-            break;
+            else{
+                if(dy == -250 && dx <=480){
+                dx = dx + 10;
+                dir = 1;
+                rArrow = "#800000";
+                }
+            dir = 1;
+            rArrow = "#800000";
+            }
+        }
+        break;
 	case 38://up
 	uArrow = "#808000";
 	if(dx == 250 && dy >= -240){
@@ -185,7 +191,7 @@ function game() {
 		context.arc(x,y,r,s,e);
 		context.fill();
 	}
-	
+
     function draw(){
 	if(dx == -450){
 	    sky = "#cceeff";
