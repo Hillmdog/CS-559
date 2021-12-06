@@ -73,8 +73,39 @@ function start(){
     draw();
 }
 window.onload=start;
-
-function game() {
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Cave
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function cave(){
+    var canvas = document.getElementById("myCanvas");
+    canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
+    var ctx = canvas.getContext("2d");
+    var stack;
+    function rect(x,y,w,h,C){
+        ctx.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+        ctx.fillStyle = C;
+        ctx.fillRect(x,y,w,h);
+    }
+	function circ(x,y,r,s,e, c){
+	    ctx.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+		ctx.fillStyle = c;
+		ctx.beginPath();
+		ctx.arc(x,y,r,s,e);
+		ctx.fill();
+	}
+    function draw(){
+        window.requestAnimationFrame(draw);
+    }
+    draw();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene over World
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function overWorld() {
     var canvas = document.getElementById("myCanvas");
     canvas.style = "position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; border:2px dotted";
     var dx = 0;
@@ -116,7 +147,7 @@ function game() {
         break;
         case 39: //right arrow key
         if(dx == 490 && dy == 0){
-        tod = 1;
+            cave();
         }
         if(dx <= 490){
             if(dx < 490 && dy == 0){
@@ -407,9 +438,11 @@ function game() {
 	Guy();
     stack.shift();//context.restore();
 	//main guy
+	stack.unshift(mat3.clone(stack[0]));//context.save();
 	mat3.translate(stack[0],stack[0],[dx,dy]);
     Guy();
-
+    stack.shift();//context.restore();
+    rect(910,430,90,120,"#86592d");
     }
     draw();
     window.addEventListener('keydown',getKeyAndMove);
