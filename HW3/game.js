@@ -13,6 +13,7 @@ function world() {
     var lArrow = "#0099ff";
     var uArrow = "#ffff00";
     var dArrow = "#33cc33";
+    var ESCP = "#ff0000";
     var theta = Math.PI/36*0;
 
     var context = canvas.getContext("2d");
@@ -203,70 +204,98 @@ function world() {
             }
 
         function DrawLArrow(color) {
-                context.beginPath();
-                context.fillStyle = color;
-                context.strokeStyle = "black";
-                context.lineWidth = 2;
-                context.moveTo(10,60);
-                context.lineTo(20,80);
-                context.lineTo(20,70);
-                context.lineTo(40,70);
-                context.lineTo(40,50);
-                context.lineTo(20,50);
-                context.lineTo(20,40);
-                context.closePath();
-                context.stroke();
-                context.fill();
-            }
+            context.beginPath();
+            context.fillStyle = color;
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.moveTo(10,60);
+            context.lineTo(20,80);
+            context.lineTo(20,70);
+            context.lineTo(40,70);
+            context.lineTo(40,50);
+            context.lineTo(20,50);
+            context.lineTo(20,40);
+            context.closePath();
+            context.stroke();
+            context.fill();
+        }
         function DrawRArrow(color) {
-                context.beginPath();
-                context.fillStyle = color;
-                context.strokeStyle = "black";
-                context.lineWidth = 2;
-                context.moveTo(110,60);
-                context.lineTo(100,40);
-                context.lineTo(100,50);
-                context.lineTo(80,50);
-                context.lineTo(80,70);
-                context.lineTo(100,70);
-                context.lineTo(100,80);
-                context.closePath();
-                context.stroke();
-                context.fill();
-            }
+            context.beginPath();
+            context.fillStyle = color;
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.moveTo(110,60);
+            context.lineTo(100,40);
+            context.lineTo(100,50);
+            context.lineTo(80,50);
+            context.lineTo(80,70);
+            context.lineTo(100,70);
+            context.lineTo(100,80);
+            context.closePath();
+            context.stroke();
+            context.fill();
+        }
         function DrawDArrow(color) {
-                context.beginPath();
-                context.fillStyle = color;
-                context.strokeStyle = "black";
-                context.lineWidth = 2;
-                context.moveTo(60,110);
-                context.lineTo(80,100);
-                context.lineTo(70,100);
-                context.lineTo(70,80);
-                context.lineTo(50,80);
-                context.lineTo(50,100);
-                context.lineTo(40,100);
-                context.closePath();
-                context.stroke();
-                context.fill();
-            }
+            context.beginPath();
+            context.fillStyle = color;
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.moveTo(60,110);
+            context.lineTo(80,100);
+            context.lineTo(70,100);
+            context.lineTo(70,80);
+            context.lineTo(50,80);
+            context.lineTo(50,100);
+            context.lineTo(40,100);
+            context.closePath();
+            context.stroke();
+            context.fill();
+        }
         function DrawUArrow(color) {
-                context.beginPath();
-                context.fillStyle = color;
-                context.strokeStyle = "black";
-                context.lineWidth = 2;
-                context.moveTo(60,10);
-                context.lineTo(40,20);
-                context.lineTo(50,20);
-                context.lineTo(50,40);
-                context.lineTo(70,40);
-                context.lineTo(70,20);
-                context.lineTo(80,20);
-                context.closePath();
-                context.stroke();
-                context.fill();
-            }
-
+            context.beginPath();
+            context.fillStyle = color;
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.moveTo(60,10);
+            context.lineTo(40,20);
+            context.lineTo(50,20);
+            context.lineTo(50,40);
+            context.lineTo(70,40);
+            context.lineTo(70,20);
+            context.lineTo(80,20);
+            context.closePath();
+            context.stroke();
+            context.fill();
+        }
+        function DrawESCP() {
+            context.beginPath();
+            context.strokeStyle = ESCP;
+            context.lineWidth = 3;
+            //E
+            context.moveTo(955,10);
+            context.lineTo(945,10);
+            context.lineTo(945,19);
+            context.lineTo(955,19);
+            context.lineTo(945,19);
+            context.lineTo(945,28);
+            context.lineTo(955,28);
+            context.stroke();
+            //S
+            context.moveTo(970,10);
+            context.lineTo(960,10);
+            context.lineTo(960,19);
+            context.lineTo(968,19);
+            context.lineTo(968,28);
+            context.lineTo(958,28);
+            context.stroke();
+            //C
+            context.lineWidth = 4;
+            context.moveTo(985,10);
+            context.lineTo(975,10);
+            context.lineTo(975,28);
+            context.lineTo(985,28);
+            context.stroke();
+        }
         function sunMoon(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             if(tod == 0){
@@ -377,6 +406,7 @@ function world() {
             DrawRArrow(rArrow);
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
+            DrawESCP();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -414,6 +444,7 @@ function world() {
         DrawRArrow(rArrow);
         DrawUArrow(uArrow);
         DrawDArrow(dArrow);
+        DrawESCP();
         //index key guy
         stack.unshift(mat3.clone(stack[0]));//context.save();
         mat3.scale(stack[0],stack[0],[0.3,.3]);
