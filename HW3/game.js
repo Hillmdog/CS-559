@@ -82,11 +82,11 @@ function world() {
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
                 if(dx == 450){
-                    if(tod == 1){
-                        tod = 0;
+                    if(tod != 2){
+                        tod = tod + 1;
                     }
                     else{
-                        tod = 1;
+                        tod = 0;
                     }
                 }
                 break;
@@ -177,7 +177,6 @@ function world() {
     function draw(){
         if(dx == -450){
             sky = "#cceeff";
-            tod = 0;
         }
             window.requestAnimationFrame(draw);
             stack =[mat3.create()];
@@ -327,9 +326,22 @@ function world() {
             }
         }
         function rock(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             image = new Image();
             image.src = 'rock.png';
             context.drawImage(image, 880, 211, 100, 100);
+        }
+        function tree(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            tree = new Image();
+            tree.src = 'tree.png';
+            context.drawImage(tree, -50, 206, 450, 500);
+        }
+        function oldtree(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            oldtree = new Image();
+            oldtree.src = 'oldTree.png';
+            context.drawImage(oldtree, 30, 330, 260, 260);
         }
         function stars(){
                 for(var i=0;i<50;i++){
@@ -342,7 +354,7 @@ function world() {
 
         function clouds(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
-                context.beginPath();
+            context.beginPath();
             context.lineWidth = 3;
             context.fillStyle = '#d9d9d9';
             context.strokeStyle = '#808080';
@@ -365,22 +377,24 @@ function world() {
                 }
             return dx2
         }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // Scene Over World
-        //
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function sunset(){
+            var grd = context.createLinearGradient(0, 0, 0, 500);
+            grd.addColorStop(0, " #cceeff");
+            grd.addColorStop(1, "#ffa64d");
+            context.fillStyle = grd;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "#ffc94f";
+            context.beginPath();
+            context.arc(485,540,60,0,2 * Math.PI);
+            context.fill();
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Over World
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 0){
-            if(tod == 1){
-                sky = "#002233";
-                rect(0,0,canvas.width,canvas.height, sky);
-                stars();
-                stack.unshift(mat3.clone(stack[0]));//context.save();
-                mat3.translate(stack[0],stack[0],[700,-50]);
-                sunMoon();
-                stack.shift();//context.restore();
-            }
-            if(tod == 0){
+            if(tod == 0){//day
                 sky = "#cceeff";
                 rect(0,0,canvas.width,canvas.height, sky);
                 stack.unshift(mat3.clone(stack[0]));//context.save();
@@ -396,6 +410,20 @@ function world() {
                 mat3.translate(stack[0],stack[0],[-1200,-50]);
                 clouds();
                 stack.shift();//context.restore();
+                tree();
+            }
+            if(tod == 1){//sunset
+               sunset();
+               tree();
+            }
+            if(tod == 2){//night
+                sky = "#002233";
+                rect(0,0,canvas.width,canvas.height, sky);
+                stars();
+                stack.unshift(mat3.clone(stack[0]));//context.save();
+                mat3.translate(stack[0],stack[0],[700,-50]);
+                sunMoon();
+                stack.shift();//context.restore();
             }
             //ground
             rect(0,550,canvas.width,50,"#86592d");
@@ -406,6 +434,10 @@ function world() {
             rect(0,550,910,10,"#339933");
             rect(920,280,20,20,"#e68a00");
             rock();
+            if(tod == 2){
+                oldtree();
+            }
+            rect(0,560,canvas.width,40,"#86592d");
             //ladder
             rect(710,295,5,250,"#663300");
             rect(750,295,5,250,"#663300");
@@ -441,45 +473,45 @@ function world() {
             stack.shift();//context.restore();
             rect(910,430,90,120,"#86592d");
         }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // Scene Cave
-        //
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Cave
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 1){
-        rect(0,0,canvas.width,canvas.height,"#7c6450");//background
-        rect(0,0,canvas.width,100,"#4a3c30");//top
-        diamond(-10,100,"#4a3c30");
-        diamond(80,70,"#4a3c30");
-        diamond(120,90,"#4a3c30");
-        diamond(200,40,"#4a3c30");
-        diamond(300,100,"#4a3c30");
-        diamond(450,50,"#4a3c30");
-        diamond(500,90,"#4a3c30");
-        diamond(700,50,"#4a3c30");
-        diamond(800,80,"#4a3c30");
-        diamond(850,70,"#4a3c30");
-        diamond(900,100,"#4a3c30");
-        //groundS
-        rect(0,550,canvas.width,50,"#4a3c30");//bottom
-        //arrows
-        DrawLArrow(lArrow);
-        DrawRArrow(rArrow);
-        DrawUArrow(uArrow);
-        DrawDArrow(dArrow);
-        DrawESCP();
-        DrawSpace();
-        //index key guy
-        stack.unshift(mat3.clone(stack[0]));//context.save();
-        mat3.scale(stack[0],stack[0],[0.3,.3]);
-        mat3.translate(stack[0],stack[0],[-281,-303]);
-        Guy();
-        stack.shift();//context.restore();
-        //main character
-        stack.unshift(mat3.clone(stack[0]));//context.save();
-        mat3.translate(stack[0],stack[0],[dx,dy]);
-        Guy();
-        stack.shift();//context.restore();
+            rect(0,0,canvas.width,canvas.height,"#7c6450");//background
+            rect(0,0,canvas.width,100,"#4a3c30");//top
+            diamond(-10,100,"#4a3c30");
+            diamond(80,70,"#4a3c30");
+            diamond(120,90,"#4a3c30");
+            diamond(200,40,"#4a3c30");
+            diamond(300,100,"#4a3c30");
+            diamond(450,50,"#4a3c30");
+            diamond(500,90,"#4a3c30");
+            diamond(700,50,"#4a3c30");
+            diamond(800,80,"#4a3c30");
+            diamond(850,70,"#4a3c30");
+            diamond(900,100,"#4a3c30");
+            //groundS
+            rect(0,550,canvas.width,50,"#4a3c30");//bottom
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            DrawSpace();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
         }
     }
     draw();
