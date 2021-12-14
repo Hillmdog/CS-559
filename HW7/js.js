@@ -22,7 +22,7 @@ function setup(){
     gl.compileShader(fragmentShader);
     if(!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
         alert(gl.getShaderInfoLog(fragmentShader)); return null; }
-
+    // Attach the shaders and link
     var shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram, vertexShader);
     gl.attachShader(shaderProgram, fragmentShader);
@@ -30,7 +30,8 @@ function setup(){
     if(!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)){
         alert("Could not initialize shaders"); }
     gl.useProgram(shaderProgram);
-
+    // with the vertex shader, we need to pass it positions
+    // as an attribute - so set up that communication
     shaderProgram.PositionAttribute = gl.getAttribLocation(shaderProgram,"vPosition");
     gl.enableVertexAttribArray(shaderProgram.PositionAttribute);
     shaderProgram.ColorAttribute = gl.getAttribLocation(shaderProgram,"vColor");
@@ -39,12 +40,11 @@ function setup(){
     gl.enableVertexAttribArray(shaderProgram.NormalAttribute);
     shaderProgram.TexCoordAttribute = gl.getAttribLocation(shaderProgram, "vTexCoord");
     gl.enableVertexAttribArray(shaderProgram.TexCoordAttribute);
-
+    // this gives us access to the matrix uniform
     shaderProgram.MVmatrix = gl.getUniformLocation(shaderProgram,"uMV");
     shaderProgram.MVPmatrix = gl.getUniformLocation(shaderProgram,"uMVP");
     shaderProgram.MVnormalMatrix = gl.getUniformLocation(shaderProgram, "uMVn");
     shaderProgram.movingLight = gl.getUniformLocation(shaderProgram, "rawLight");
-
     // Attach samplers to texture units
     shaderProgram.texSampler1 = gl.getUniformLocation(shaderProgram, "texSampler1");
     gl.uniform1i(shaderProgram.texSampler1, 0);
@@ -53,10 +53,10 @@ function setup(){
 
     // Data
     var vertexPos = new Float32Array([
-        0,1.414,0,  -1,0,-1,  1,0,-1,
-        0,1.414,0,  1,0,-1,  1,0,1,
-        0,1.414,0,  1,0,1,  -1,0,1,
-        0,1.414,0,  -1,0,1,  -1,0,-1,
+        0,1.400,0,  -1,0,-1,  1,0,-1,
+        0,1.400,0,  1,0,-1,  1,0,1,
+        0,1.400,0,  1,0,1,  -1,0,1,
+        0,1.400,0,  -1,0,1,  -1,0,-1,
         -1,0,-1,  1,0,-1,  1,0,1,
         1,0,1,  -1,0,1,  -1,0,-1  
     ]);
@@ -70,10 +70,10 @@ function setup(){
     ]);
     //actually they are not normalized
     var vertexNormals = new Float32Array([
-        0,1,1.414,  -1,1,1,  1,1,1,
-        1.414,1,0,  1,1,1,  1,1,-1,
-        0,1,-1.414,  1,1,-1,  -1,1,-1,
-        -1.414,1,0,  -1,1,-1,  -1,1,1,
+        0,1,1.400,  -1,1,1,  1,1,1,
+        1.400,1,0,  1,1,1,  1,1,-1,
+        0,1,-1.400,  1,1,-1,  -1,1,-1,
+        -1.400,1,0,  -1,1,-1,  -1,1,1,
         -1,-1,1,  1,-1,1,  1,-1,-1,
         1,-1,-1,  -1,-1,-1,  -1,-1,1
     ]);
@@ -93,28 +93,31 @@ function setup(){
         12,13,14,
         15,16,17 //bottom
     ]);
-
+    // we need to put the vertices into a buffer so we can
+    // block transfer them to the graphics hardware
     var trianglePosBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, trianglePosBuffer);//make it the default type
     gl.bufferData(gl.ARRAY_BUFFER, vertexPos, gl.STATIC_DRAW);//dispatch data to GPU
     trianglePosBuffer.itemSize = 3;
     trianglePosBuffer.numItems = 18;
-    var colorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertexColors, gl.STATIC_DRAW);
-    colorBuffer.itemSize = 3;
-    colorBuffer.numItems = 18;
     var normalBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertexNormals, gl.STATIC_DRAW);
     normalBuffer.itemSize = 3;
     normalBuffer.numItems = 18;
+    // a buffer for colors
+    var colorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertexColors, gl.STATIC_DRAW);
+    colorBuffer.itemSize = 3;
+    colorBuffer.numItems = 18;
+    // a buffer for textures
     var textureBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertexTextureCoords, gl.STATIC_DRAW);
     textureBuffer.itemSize = 2;
     textureBuffer.numItems = 18;
-
+    // a buffer for indices
     var indexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, triangleIndices, gl.STATIC_DRAW);
@@ -125,6 +128,7 @@ function setup(){
     gl.bindTexture(gl.TEXTURE_2D, texture1);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
     var image1 = new Image();
+
     var texture2 = gl.createTexture();
     gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, texture2);
