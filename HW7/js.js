@@ -67,7 +67,6 @@ function setup(){
         1,0.6,0.1,  1,0.6,0.1,  1,0.6,0.1,
         1,0.6,0.1,  1,0.6,0.1,  1,0.6,0.1
     ]);
-    //actually they are not normalized
     var vertexNormals = new Float32Array([
         0,1,1.400,  -1,1,1,  1,1,1,
         1.400,1,0,  1,1,1,  1,1,-1,
@@ -157,12 +156,12 @@ function setup(){
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
       // Option 2: At least use linear filters
-      // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
       // Optional ... if your shader & texture coordinates go outside the [0,1] range
-      // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     }
     //keeps the event listeners from crashing the code
     function change(){
