@@ -6,8 +6,7 @@ function setup(){
     slider1.value =0;
     var slider2 = document.getElementById("slider2");
     slider2.value =0;
-    var slider3 = document.getElementById("slider3");
-    slider3.value =0;
+    var time = 0;
 
     var vertexSource = document.getElementById("vertexShader").text;
     var fragmentSource = document.getElementById("fragmentShader").text;
@@ -165,11 +164,16 @@ function setup(){
       // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     }
-
+    //keeps the event listeners from crashing the code
+    function change(){
+        //do nothing
+    }
     function draw() {
-        var angleCamera = slider1.value*0.01*Math.PI;
-        var lightDir = slider2.value*0.01*Math.PI;
-        var angleRotate = slider3.value*0.01*Math.PI;
+        time = time + .1;
+        window.requestAnimationFrame(draw);
+        var angleCamera = time*0.01*Math.PI;
+        var lightDir = slider1.value*0.01*Math.PI;
+        var angleRotate = slider2.value*0.01*Math.PI;
         
         var eye = [400*Math.sin(angleCamera), 200.0, 400*Math.cos(angleCamera)];
         var target = [0,0,0];
@@ -219,10 +223,10 @@ function setup(){
 
         gl.drawElements(gl.TRIANGLES, triangleIndices.length, gl.UNSIGNED_BYTE,0);
     }
-
-    slider1.addEventListener("input",draw);
-    slider2.addEventListener("input",draw);
-    slider3.addEventListener("input",draw);
+    draw();
+    //slider1.addEventListener("input",draw);
+    slider1.addEventListener("input",change);
+    slider2.addEventListener("input",change);
     initTextureThenDraw();
 }
 window.onload = setup;
