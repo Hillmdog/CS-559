@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 3;
+    var scene = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -168,6 +168,7 @@ function world() {
                 if(dx == 0){
                     dy = dy + 10;
                     if(dy == 180){
+                        dy = -500;
                         scene = 3;
                     }
                 }
@@ -690,7 +691,25 @@ function world() {
             underWater();
             //floor
             rect(0,550,canvas.width,50,"#332200");
-
+            //ladder
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[-250,-450]);
+            rect(710,295,5,250,"#663300");
+            rect(750,295,5,250,"#663300");
+            rect(708,315,50,5,"#663300");
+            rect(708,335,50,5,"#663300");
+            rect(708,355,50,5,"#663300");
+            rect(708,375,50,5,"#663300");
+            rect(708,395,50,5,"#663300");
+            rect(708,415,50,5,"#663300");
+            rect(708,435,50,5,"#663300");
+            rect(708,455,50,5,"#663300");
+            rect(708,475,50,5,"#663300");
+            rect(708,495,50,5,"#663300");
+            rect(708,515,50,5,"#663300");
+            rect(708,535,50,5,"#663300");
+            stack.shift();//context.restore();
+            rect(0,0,0,0,"#663300");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
