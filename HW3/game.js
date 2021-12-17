@@ -205,6 +205,10 @@ function world() {
                 if(dy > -450){
                     dy = dy - 10;
                 }
+                if(dx == 0 && dy == -450){
+                    dy = 160;
+                    scene = 2;
+                }
                 uArrow = "#808000";
                 break;
                 case 40://down
