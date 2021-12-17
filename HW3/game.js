@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var scene = 3;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -170,6 +170,45 @@ function world() {
                     if(dy == 180){
                         scene = 3;
                     }
+                }
+                dArrow = "#196619";
+                break;
+                case 27://esc
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 27://esc
+                location.href='intro.html'
+                break;
+            }
+        }
+       if(scene == 3){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                lArrow = "#004d80";
+                dir = 0;
+                if(dx > -450){
+                    dx = dx - 10;
+                }
+                break;
+                case 39: //right arrow key
+                rArrow = "#800000";
+                dir = 1;
+                if(dx < 490){
+                    dx = dx + 10;
+                }
+                break;
+                case 38://up
+                if(dy > -450){
+                    dy = dy - 10;
+                }
+                uArrow = "#808000";
+                break;
+                case 40://down
+                if(dy < 0){
+                    dy = dy + 10;
                 }
                 dArrow = "#196619";
                 break;
@@ -442,6 +481,14 @@ function world() {
             context.arc(485,540,60,0,2 * Math.PI);
             context.fill();
         }
+        function underWater(){
+            var grd = context.createLinearGradient(0, 0, 0, 500);
+            grd.addColorStop(0, " #266691");
+            grd.addColorStop(1, "#102a3c");
+            context.fillStyle = grd;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "#ffc94f";
+        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Scene Over World
@@ -640,7 +687,28 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 3){
+            underWater();
+            //floor
+            rect(0,550,canvas.width,50,"#332200");
 
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            DrawSpace();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
         }
     }
     draw();
