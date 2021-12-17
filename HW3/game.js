@@ -190,24 +190,27 @@ function world() {
                 case 37: //left arrow key
                 lArrow = "#004d80";
                 dir = 0;
-                if(dx > -450){
+                if(dx > -450 && dy >= -450){
                     dx = dx - 10;
                 }
                 break;
                 case 39: //right arrow key
                 rArrow = "#800000";
                 dir = 1;
-                if(dx < 490){
+                if(dx < 490  && dy >= -450){
                     dx = dx + 10;
                 }
                 break;
                 case 38://up
-                if(dy > -450){
+                if(dy > -450 && dx != 0){
                     dy = dy - 10;
                 }
-                if(dx == 0 && dy == -450){
-                    dy = 160;
-                    scene = 2;
+                if(dx == 0){
+                    dy = dy - 10;
+                    if(dy == -500){
+                        dy = 160;
+                        scene = 2;
+                    }
                 }
                 uArrow = "#808000";
                 break;
