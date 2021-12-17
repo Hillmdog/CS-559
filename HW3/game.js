@@ -608,7 +608,7 @@ function world() {
             rect(708,375,50,5,"#663300");
             rect(708,395,50,5,"#663300");
             stack.shift();//context.restore();
-            rect(708,435,50,5,"#663300");
+            rect(0,0,0,0,"#663300");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
