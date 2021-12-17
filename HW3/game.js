@@ -7,7 +7,9 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var scene = 1;
+    var key = 0;
+    var doorLock = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -591,8 +593,8 @@ function world() {
             rect(0,550,canvas.width,50,"#86592d");
             rect(700,300,300,300,"#86592d");
             rect(700,300,300,10,"#339933");
-            rect(810, 450, 100, 100, "black");
-            circ(860,450,50,0,2 * Math.PI, "black");
+            rect(810, 450, 100, 100, "black");//door
+            circ(860,450,50,0,2 * Math.PI, "black");//door
             rect(0,550,910,10,"#339933");
             rect(920,280,20,20,"#e68a00");
             rock();
@@ -656,6 +658,14 @@ function world() {
             diamond(900,100,"#4a3c30");
             //groundS
             rect(0,550,canvas.width,50,"#4a3c30");//bottom
+            //door
+            rect(600, 400, 150, 150, "grey");
+            circ(675,395,75,0,2 * Math.PI, "grey");
+            rect(610, 410, 130, 140, "black");
+            circ(675,403,65,0,2 * Math.PI, "black");
+            if(doorLock == 0){
+                
+            }
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
