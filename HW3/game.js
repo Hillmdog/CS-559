@@ -6,9 +6,9 @@ function world() {
     var dy = 0;
     var dx2 = 0;
     var dir = 0;
-    var sky = "#cceeff";
     var tod = 0;
     var scene = 0;
+    var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
     var uArrow = "#ffff00";
@@ -23,7 +23,11 @@ function world() {
         if(scene == 0){
             switch (event.keyCode) {
                 case 37: //left arrow key
-                if(dx > -450){
+                if(dx >= -490){
+                    if(dx == -490){
+                        scene = 2;
+                        dx = 510;
+                    }
                     if(dx<= 490 && dy == 0){
                         dx = dx - 10;
                         dir = 0;
@@ -117,6 +121,56 @@ function world() {
                 uArrow = "#808000";
                 break;
                 case 40://down
+                dArrow = "#196619";
+                break;
+                case 27://esc
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 27://esc
+                location.href='intro.html'
+                break;
+            }
+        }
+       if(scene == 2){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                lArrow = "#004d80";
+                dir = 0;
+                if(dx >= -40){
+                    if(dy == 0){
+                        dx = dx - 10;
+                    }
+                }
+                break;
+                case 39: //right arrow key
+                rArrow = "#800000";
+                dir = 1;
+                if(dx <= 520){
+                    if(dx == 520){
+                        dx = -500
+                        scene = 0;
+                    }
+                    if(dy == 0){
+                        dx = dx + 10;
+                    }
+                }
+                break;
+                case 38://up
+                if(dx == 0 && dy > 0){
+                    dy = dy - 10;
+                }
+                uArrow = "#808000";
+                break;
+                case 40://down
+                if(dx == 0){
+                    dy = dy + 10;
+                    if(dy == 180){
+                        scene = 3;
+                    }
+                }
                 dArrow = "#196619";
                 break;
                 case 27://esc
@@ -512,6 +566,81 @@ function world() {
             mat3.translate(stack[0],stack[0],[dx,dy]);
             Guy();
             stack.shift();//context.restore();
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Docs
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 2){
+            if(tod == 0){//day
+                sky = "#cceeff";
+                rect(0,0,canvas.width,canvas.height, sky);
+                stack.unshift(mat3.clone(stack[0]));//context.save();
+                mat3.translate(stack[0],stack[0],[700,-50]);
+                sunMoon();
+                stack.shift();//context.restore();
+            }
+            if(tod == 1){//sunset
+               sunset();
+            }
+            if(tod == 2){//night
+                sky = "#002233";
+                rect(0,0,canvas.width,canvas.height, sky);
+                stars();
+                stack.unshift(mat3.clone(stack[0]));//context.save();
+                mat3.translate(stack[0],stack[0],[700,-50]);
+                sunMoon();
+                stack.shift();//context.restore();
+            }
+            //water
+            rect(0,560,canvas.width,40,"#266691");
+            //Doc
+            rect(400,520,600,20,"#995c00");
+            //ladder
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[-250,190]);
+            rect(710,295,5,250,"#663300");
+            rect(750,295,5,250,"#663300");
+            rect(708,315,50,5,"#663300");
+            rect(708,335,50,5,"#663300");
+            rect(708,355,50,5,"#663300");
+            rect(708,375,50,5,"#663300");
+            rect(708,395,50,5,"#663300");
+            stack.shift();//context.restore();
+            rect(708,435,50,5,"#663300");
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            DrawSpace();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[0,-20]);
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+            //Doc Pillars
+            rect(410,500,30,150,"#995c00");
+            rect(570,500,30,150,"#995c00");
+            rect(730,500,30,150,"#995c00");
+            rect(890,500,30,150,"#995c00");
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene UnderWater
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 3){
+
         }
     }
     draw();
