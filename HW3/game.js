@@ -189,14 +189,14 @@ function world() {
             switch (event.keyCode) {
                 case 37: //left arrow key
                 lArrow = "#004d80";
-                dir = 0;
+                dir = 2;
                 if(dx > -450 && dy >= -450){
                     dx = dx - 10;
                 }
                 break;
                 case 39: //right arrow key
                 rArrow = "#800000";
-                dir = 1;
+                dir = 3;
                 if(dx < 490  && dy >= -450){
                     dx = dx + 10;
                 }
@@ -207,7 +207,7 @@ function world() {
                 }
                 if(dx == 0){
                     dy = dy - 10;
-                    if(dy == -500){
+                    if(dy <= -500){
                         dy = 160;
                         scene = 2;
                     }
@@ -235,9 +235,11 @@ function world() {
     function ChangeColor() {
         switch (event.keyCode) {
         case 37: //left arrow key
+            dir = 0;
             lArrow = "#0099ff";
             break;
         case 39: //right arrow key
+            dir = 1;
             rArrow = "#ff0000";
             break;
         case 38://up
@@ -276,6 +278,9 @@ function world() {
 	}
 
     function draw(){
+        if(scene == 3 && dy <0){
+            dy = dy + .2;
+        }
         if(dx == -450){
             sky = "#cceeff";
         }
@@ -289,27 +294,75 @@ function world() {
                 mat3.fromTranslation(tx,[500,450]);
                 mat3.translate(tx,tx,[-500,-450]);
                 mat3.multiply(stack[0],stack[0],tx);
-                if(dir == 0){
-                    rect(450,450,60,80, "#4d4d4d");
-                    rect(450,525,25,25, "#cc8800");
-                    rect(450,545,25,5, "#000000");
-                    rect(485,525,25,25, "#cc8800");
-                    rect(485,545,25,5, "#000000");
-                    rect(450,510,60,20, "#cc8800");
-                    rect(450,510,60,5, "#000000");
-                    rect(510,475,25,45, "#cc4400");
-                    rect(475,485,20,30, "#333333");
+                if(scene != 3){
+                    if(dir == 0){
+                        rect(450,450,60,80, "#4d4d4d");//body
+                        rect(450,525,25,25, "#cc8800");//left leg
+                        rect(450,545,25,5, "#000000");//left foot
+                        rect(485,525,25,25, "#cc8800");//right leg
+                        rect(485,545,25,5, "#000000");//right foot
+                        rect(450,510,60,20, "#cc8800");//waist
+                        rect(450,510,60,5, "#000000");//belt
+                        rect(510,475,25,45, "#cc4400");//backpack
+                        rect(475,485,20,30, "#333333");//arm
+                    }
+                    else{
+                        rect(450,450,60,80, "#4d4d4d");
+                        rect(450,525,25,25, "#cc8800");
+                        rect(450,545,25,5, "#000000");
+                        rect(485,525,25,25, "#cc8800");
+                        rect(485,545,25,5, "#000000");
+                        rect(450,510,60,20, "#cc8800");
+                        rect(450,510,60,5, "#000000");
+                        rect(425,475,25,45, "#cc4400");
+                        rect(465,485,20,30, "#333333");
+                    }
                 }
                 else{
-                    rect(450,450,60,80, "#4d4d4d");
-                    rect(450,525,25,25, "#cc8800");
-                    rect(450,545,25,5, "#000000");
-                    rect(485,525,25,25, "#cc8800");
-                    rect(485,545,25,5, "#000000");
-                    rect(450,510,60,20, "#cc8800");
-                    rect(450,510,60,5, "#000000");
-                    rect(425,475,25,45, "#cc4400");
-                    rect(465,485,20,30, "#333333");
+                    if(dir == 0){
+                        rect(450,450,60,80, "#4d4d4d");//body
+                        rect(450,525,25,25, "#cc8800");//left leg
+                        rect(450,545,25,5, "#000000");//left foot
+                        rect(485,525,25,25, "#cc8800");//right leg
+                        rect(485,545,25,5, "#000000");//right foot
+                        rect(450,510,60,20, "#cc8800");//waist
+                        rect(450,510,60,5, "#000000");//belt
+                        rect(510,475,25,45, "#cc4400");//backpack
+                        rect(475,485,20,30, "#333333");//arm
+                    }
+                    if(dir == 1){
+                        rect(450,450,60,80, "#4d4d4d");
+                        rect(450,525,25,25, "#cc8800");
+                        rect(450,545,25,5, "#000000");
+                        rect(485,525,25,25, "#cc8800");
+                        rect(485,545,25,5, "#000000");
+                        rect(450,510,60,20, "#cc8800");
+                        rect(450,510,60,5, "#000000");
+                        rect(425,475,25,45, "#cc4400");
+                        rect(465,485,20,30, "#333333");
+                    }
+                    if(dir == 2){//swim left
+                        rect(450,450,80,60, "#4d4d4d");//body
+                        rect(525,450,25,25, "#cc8800");//left leg
+                        rect(545,450,5,25, "#000000");//left foot
+                        rect(525,485,25,25, "#cc8800");//right leg
+                        rect(545,485,5,25, "#000000");//right foot
+                        rect(510,450,20,60, "#cc8800");//waist
+                        rect(510,450,5,60, "#000000");//belt
+                        rect(475,425,45,25, "#cc4400");//backpack
+                        rect(485,475,30,20, "#333333");//arm
+                    }
+                    if(dir == 3){//swim right
+                        rect(450,450,80,60, "#4d4d4d");//body
+                        rect(425,450,25,25, "#cc8800");//left leg
+                        rect(425,450,5,25, "#000000");//left foot
+                        rect(425,485,25,25, "#cc8800");//right leg
+                        rect(425,485,5,25, "#000000");//right foot
+                        rect(450,450,20,60, "#cc8800");//waist
+                        rect(465,450,5,60, "#000000");//belt
+                        rect(465,425,45,25, "#cc4400");//backpack
+                        rect(465,465,30,20, "#333333");//arm
+                    }
                 }
             }
 
