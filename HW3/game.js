@@ -11,7 +11,7 @@ function world() {
     var hasKey = 0;
     var doorLock = 0;
     var map = 0;
-    var help = 0;
+    var menu = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -97,11 +97,16 @@ function world() {
                     }
                 }
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
-                case 72://Help
-
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
                 break;
                 case 77://Map
                 if(map == 0){
@@ -137,7 +142,7 @@ function world() {
                 case 40://down
                 dArrow = "#196619";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
                 case 32://space bar
@@ -154,11 +159,16 @@ function world() {
                 }
                 SpaceBar = "#1a1a1a";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
-                case 72://Help
-                location.href='intro.html'
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
                 break;
                 case 77://Map
                 if(map == 0){
@@ -210,17 +220,22 @@ function world() {
                 }
                 dArrow = "#196619";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
-                case 72://Help
-                location.href='intro.html'
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
                 break;
                 case 77://Map
                 if(map == 0){
@@ -267,7 +282,7 @@ function world() {
                 }
                 dArrow = "#196619";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
                 case 32://space bar
@@ -276,11 +291,16 @@ function world() {
                     }
                 SpaceBar = "#1a1a1a";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
-                case 72://Help
-                location.href='intro.html'
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
                 break;
                 case 77://Map
                 if(map == 0){
@@ -330,17 +350,22 @@ function world() {
                 case 40://down
                 dArrow = "#196619";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
                 break;
-                case 27://esc
+                case 82://r
                 location.href='intro.html'
                 break;
-                case 72://Help
-                location.href='intro.html'
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
                 break;
                 case 77://Map
                 if(map == 0){
@@ -555,42 +580,6 @@ function world() {
             context.fillStyle = SpaceBar;
             context.fillRect(10,570,100,20);
         }
-        function help(){
-            context.strokeStyle = "black";
-            context.beginPath();
-            context.lineWidth = 3;
-            //H
-            context.moveTo(877,8);
-            context.lineTo(877,30);
-            context.moveTo(862,8);
-            context.lineTo(862,30);
-            context.moveTo(862,18);
-            context.lineTo(877,18);
-            //E
-            context.moveTo(895,10);
-            context.lineTo(885,10);
-            context.lineTo(885,19);
-            context.lineTo(895,19);
-            context.lineTo(885,19);
-            context.lineTo(885,28);
-            context.lineTo(895,28);
-            context.stroke();
-            //L
-            context.moveTo(900,8);
-            context.lineTo(900,28);
-            context.lineTo(910,28);
-            context.stroke();
-            //P
-            context.lineWidth = 4;
-            context.moveTo(925,10);
-            context.lineTo(915,10);
-            context.lineTo(915,19);
-            context.lineTo(925,19);
-            context.lineTo(925,9);
-            context.moveTo(915,19);
-            context.lineTo(915,30);
-            context.stroke();
-        }
         function DrawESCP() {
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             context.beginPath();
@@ -672,6 +661,12 @@ function world() {
             portal = new Image();
             portal.src = 'portal.png';
             context.drawImage(portal, 0, 120, 180, 420);
+        }
+        function drawMenu(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            book = new Image();
+            book.src = 'book.png';
+            context.drawImage(book, 0, 0, 1000, 500);
         }
         function stars(){
                 for(var i=0;i<50;i++){
@@ -943,7 +938,6 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
-            help();
             clear();
             DrawSpace();
             //index key guy
@@ -960,6 +954,9 @@ function world() {
             drawRect(910,430,90,120,"#86592d");
             if(map == 1){
                 drawMap();
+            }
+            if(menu == 1){
+                drawMenu();
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1022,7 +1019,6 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
-            help();
             clear();
             DrawSpace();
             //index key guy
@@ -1038,6 +1034,9 @@ function world() {
             stack.shift();//context.restore();
             if(map == 1){
                 drawMap();
+            }
+            if(menu == 1){
+                drawMenu();
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1088,7 +1087,6 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
-            help();
             clear();
             DrawSpace();
             //index key guy
@@ -1110,6 +1108,9 @@ function world() {
             drawRect(890,500,30,150,"#995c00");
             if(map == 1){
                 drawMap();
+            }
+            if(menu == 1){
+                drawMenu();
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1154,7 +1155,6 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
-            help();
             clear();
             DrawSpace();
             //index key guy
@@ -1170,6 +1170,9 @@ function world() {
             stack.shift();//context.restore();
             if(map == 1){
                 drawMap();
+            }
+            if(menu == 1){
+                drawMenu();
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1224,7 +1227,6 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
-            help();
             clear();
             DrawSpace();
             drawPortal();
@@ -1241,6 +1243,9 @@ function world() {
             stack.shift();//context.restore();
             if(map == 1){
                 drawMap();
+            }
+            if(menu == 1){
+                drawMenu();
             }
         }
     }
