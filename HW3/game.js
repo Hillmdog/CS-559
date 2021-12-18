@@ -129,8 +129,14 @@ function world() {
                 location.href='intro.html'
                 break;
                 case 32://space bar
-                if(dx > 140 && dx < 240 && hasKey == 1){
-                    doorLock = 1;
+                if(dx > 140 && dx < 240){
+                    if(doorLock == 0 && hasKey == 1){
+                        doorLock = 1;
+                        hasKey = 0;
+                    }
+                    if(doorLock == 1){
+                        scene = 4;
+                    }
                 }
                 SpaceBar = "#1a1a1a";
                 break;
@@ -236,6 +242,52 @@ function world() {
                 break;
             }
         }
+       if(scene == 4){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                lArrow = "#004d80";
+                dir = 0;
+                if(dx > -450 && dy >= -450){
+                    dx = dx - 10;
+                }
+                break;
+                case 39: //right arrow key
+                rArrow = "#800000";
+                dir = 1;
+                if(dx < 490  && dy >= -450){
+                    dx = dx + 10;
+                }
+                break;
+                case 38://up
+                if(dy > -450 && dx != 0){
+                    dy = dy - 10;
+                }
+                if(dx == 0){
+                    dy = dy - 10;
+                    if(dy <= -500){
+                        dy = 160;
+                        scene = 2;
+                    }
+                }
+                uArrow = "#808000";
+                break;
+                case 40://down
+                if(dy < 0){
+                    dy = dy + 10;
+                }
+                dArrow = "#196619";
+                break;
+                case 27://esc
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 27://esc
+                location.href='intro.html'
+                break;
+            }
+        }
     }
     function ChangeColor() {
         switch (event.keyCode) {
@@ -274,13 +326,21 @@ function world() {
         context.fill();
     }
 
-	function circ(x,y,r,s,e, c){
+	function circ(x,y,r,s,e,c){
 	    context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
 		context.fillStyle = c;
 		context.beginPath();
 		context.arc(x,y,r,s,e);
 		context.fill();
 	}
+    function arc(x,y,r,s,e,c,lw){
+        context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+        context.strokeStyle = c;
+        context.lineWidth = lw;
+        context.beginPath();
+        context.arc(x,y,r,s,e);
+        context.stroke();
+    }
 
     function draw(){
         if(scene == 3 && dy <0){
@@ -299,75 +359,53 @@ function world() {
                 mat3.fromTranslation(tx,[500,450]);
                 mat3.translate(tx,tx,[-500,-450]);
                 mat3.multiply(stack[0],stack[0],tx);
-                if(scene != 3){
-                    if(dir == 0){
-                        rect(450,450,60,80, "#4d4d4d");//body
-                        rect(450,525,25,25, "#cc8800");//left leg
-                        rect(450,545,25,5, "#000000");//left foot
-                        rect(485,525,25,25, "#cc8800");//right leg
-                        rect(485,545,25,5, "#000000");//right foot
-                        rect(450,510,60,20, "#cc8800");//waist
-                        rect(450,510,60,5, "#000000");//belt
-                        rect(510,475,25,45, "#cc4400");//backpack
-                        rect(475,485,20,30, "#333333");//arm
-                    }
-                    else{
-                        rect(450,450,60,80, "#4d4d4d");
-                        rect(450,525,25,25, "#cc8800");
-                        rect(450,545,25,5, "#000000");
-                        rect(485,525,25,25, "#cc8800");
-                        rect(485,545,25,5, "#000000");
-                        rect(450,510,60,20, "#cc8800");
-                        rect(450,510,60,5, "#000000");
-                        rect(425,475,25,45, "#cc4400");
-                        rect(465,485,20,30, "#333333");
-                    }
+                if(dir == 0){
+                    rect(450,450,60,80, "#4d4d4d");//body
+                    rect(450,525,25,25, "#cc8800");//left leg
+                    rect(450,545,25,5, "#000000");//left foot
+                    rect(485,525,25,25, "#cc8800");//right leg
+                    rect(485,545,25,5, "#000000");//right foot
+                    rect(450,510,60,20, "#cc8800");//waist
+                    rect(450,510,60,5, "#000000");//belt
+                    rect(510,475,25,45, "#cc4400");//backpack
+                    drawKey();
+                    rect(475,485,20,30, "#333333");//arm
                 }
-                else{
-                    if(dir == 0){
-                        rect(450,450,60,80, "#4d4d4d");//body
-                        rect(450,525,25,25, "#cc8800");//left leg
-                        rect(450,545,25,5, "#000000");//left foot
-                        rect(485,525,25,25, "#cc8800");//right leg
-                        rect(485,545,25,5, "#000000");//right foot
-                        rect(450,510,60,20, "#cc8800");//waist
-                        rect(450,510,60,5, "#000000");//belt
-                        rect(510,475,25,45, "#cc4400");//backpack
-                        rect(475,485,20,30, "#333333");//arm
-                    }
-                    if(dir == 1){
-                        rect(450,450,60,80, "#4d4d4d");
-                        rect(450,525,25,25, "#cc8800");
-                        rect(450,545,25,5, "#000000");
-                        rect(485,525,25,25, "#cc8800");
-                        rect(485,545,25,5, "#000000");
-                        rect(450,510,60,20, "#cc8800");
-                        rect(450,510,60,5, "#000000");
-                        rect(425,475,25,45, "#cc4400");
-                        rect(465,485,20,30, "#333333");
-                    }
-                    if(dir == 2){//swim left
-                        rect(450,450,80,60, "#4d4d4d");//body
-                        rect(525,450,25,25, "#cc8800");//left leg
-                        rect(545,450,5,25, "#000000");//left foot
-                        rect(525,485,25,25, "#cc8800");//right leg
-                        rect(545,485,5,25, "#000000");//right foot
-                        rect(510,450,20,60, "#cc8800");//waist
-                        rect(510,450,5,60, "#000000");//belt
-                        rect(475,425,45,25, "#cc4400");//backpack
-                        rect(485,475,30,20, "#333333");//arm
-                    }
-                    if(dir == 3){//swim right
-                        rect(450,450,80,60, "#4d4d4d");//body
-                        rect(425,450,25,25, "#cc8800");//left leg
-                        rect(425,450,5,25, "#000000");//left foot
-                        rect(425,485,25,25, "#cc8800");//right leg
-                        rect(425,485,5,25, "#000000");//right foot
-                        rect(450,450,20,60, "#cc8800");//waist
-                        rect(465,450,5,60, "#000000");//belt
-                        rect(465,425,45,25, "#cc4400");//backpack
-                        rect(465,465,30,20, "#333333");//arm
-                    }
+                if(dir == 1){
+                    rect(450,450,60,80, "#4d4d4d");
+                    rect(450,525,25,25, "#cc8800");
+                    rect(450,545,25,5, "#000000");
+                    rect(485,525,25,25, "#cc8800");
+                    rect(485,545,25,5, "#000000");
+                    rect(450,510,60,20, "#cc8800");
+                    rect(450,510,60,5, "#000000");
+                    rect(425,475,25,45, "#cc4400");
+                    drawKey();
+                    rect(465,485,20,30, "#333333");
+                }
+                if(dir == 2){//swim left
+                    rect(450,450,80,60, "#4d4d4d");//body
+                    rect(525,450,25,25, "#cc8800");//left leg
+                    rect(545,450,5,25, "#000000");//left foot
+                    rect(525,485,25,25, "#cc8800");//right leg
+                    rect(545,485,5,25, "#000000");//right foot
+                    rect(510,450,20,60, "#cc8800");//waist
+                    rect(510,450,5,60, "#000000");//belt
+                    rect(475,425,45,25, "#cc4400");//backpack
+                    drawKey();
+                    rect(485,465,30,20, "#333333");//arm
+                }
+                if(dir == 3){//swim right
+                    rect(450,450,80,60, "#4d4d4d");//body
+                    rect(425,450,25,25, "#cc8800");//left leg
+                    rect(425,450,5,25, "#000000");//left foot
+                    rect(425,485,25,25, "#cc8800");//right leg
+                    rect(425,485,5,25, "#000000");//right foot
+                    rect(450,450,20,60, "#cc8800");//waist
+                    rect(465,450,5,60, "#000000");//belt
+                    rect(465,425,45,25, "#cc4400");//backpack
+                    drawKey();
+                    rect(465,465,30,20, "#333333");//arm
                 }
             }
 
@@ -554,6 +592,34 @@ function world() {
             context.fillStyle = grd;
             context.fillRect(0, 0, canvas.width, canvas.height);
             context.fillStyle = "#ffc94f";
+        }
+        function drawKey(){
+            if(hasKey == 1){
+                if(dir == 0){
+                    arc(500,508,5,0,2 * Math.PI,"yellow", 3);
+                    rect(465,505,10,3, "yellow");
+                    rect(465,505,3,6, "yellow");
+                    rect(472,505,3,8, "yellow");
+                }
+                if(dir == 1){
+                    arc(460,508,5,0,2 * Math.PI,"yellow", 3);
+                    rect(485,505,10,3, "yellow");
+                    rect(492,505,3,6, "yellow");
+                    rect(485,505,3,8, "yellow");
+                }
+                if(dir == 2){
+                    arc(507,460,5,0,2 * Math.PI,"yellow", 3);
+                    rect(503,485,3,10, "yellow");
+                    rect(506,492,6,3, "yellow");
+                    rect(506,485,8,3, "yellow");
+                }
+                if(dir == 3){
+                    arc(473,460,5,0,2 * Math.PI,"yellow", 3);
+                    rect(473,485,3,10, "yellow");
+                    rect(468,492,6,3, "yellow");
+                    rect(466,485,8,3, "yellow");
+                }
+            }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -808,6 +874,31 @@ function world() {
             rect(708,535,50,5,"#663300");
             stack.shift();//context.restore();
             rect(0,0,0,0,"#663300");
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            DrawSpace();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene UnderWater
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 4){
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
