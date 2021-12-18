@@ -7,9 +7,10 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 5;
+    var scene = 4;
     var hasKey = 0;
     var doorLock = 0;
+    var zeroG = 0;
     var map = 0;
     var menu = 0;
     var sky = "#cceeff";
@@ -317,6 +318,8 @@ function world() {
                 lArrow = "#004d80";
                 dir = 0;
                 if(dx == -390){
+                    dx = 450;
+                    dy = -150;
                     scene = 5;
                 }
                 if(dx > -390 && dx <= 210){
@@ -381,16 +384,32 @@ function world() {
                 case 37: //left arrow key
                 lArrow = "#004d80";
                 dir = 0;
+                zeroG = 1;
+                if(dx > -450){
+                    dx = dx - 10;
+                }
                 break;
                 case 39: //right arrow key
                 rArrow = "#800000";
                 dir = 1;
+                zeroG = 2;
+                if(dx < 490){
+                    dx = dx + 10;
+                }
                 break;
                 case 38://up
                 uArrow = "#808000";
+                zeroG = 3;
+                if(dy > -450){
+                    dy = dy - 10;
+                }
                 break;
                 case 40://down
                 dArrow = "#196619";
+                zeroG = 4;
+                if(dy < 50){
+                    dy = dy + 10;
+                }
                 break;
                 case 82://r
                 location.href='intro.html'
