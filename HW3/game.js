@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 1;
+    var scene = 4;
     var hasKey = 1;
     var doorLock = 0;
     var map = 0;
@@ -1180,6 +1180,15 @@ function world() {
         if(scene == 4){
             drawRect(0,0,canvas.width,canvas.height,"#433860");
             drawRect(0,550,canvas.width,50,"#170e19");
+            //bricks
+            drawRect(0,50,canvas.width,4,"#2f213b");
+            drawRect(0,110,canvas.width,4,"#2f213b");
+            drawRect(0,170,canvas.width,4,"#2f213b");
+            drawRect(0,230,canvas.width,4,"#2f213b");
+            drawRect(0,290,canvas.width,4,"#2f213b");
+            drawRect(0,350,canvas.width,4,"#2f213b");
+            drawRect(0,410,canvas.width,4,"#2f213b");
+            drawRect(0,480,canvas.width,4,"#2f213b");
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.translate(stack[0],stack[0],[230,-230]);
             drawRect(600, 400, 150, 150, "#65738c");
@@ -1187,6 +1196,7 @@ function world() {
             drawRect(610, 410, 130, 140, "black");
             circ(675,403,65,0,2 * Math.PI, "black");
             stack.shift();//context.restore();
+            //staris
             drawRect(800,300,500,50,"#170e19");
             drawRect(805,305,500,40,"#2f213b");
             drawRect(740,350,500,50,"#170e19");
