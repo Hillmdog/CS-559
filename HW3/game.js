@@ -7,8 +7,8 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
-    var hasKey = 0;
+    var scene = 1;
+    var hasKey = 1;
     var doorLock = 0;
     var map = 0;
     var help = 0;
@@ -143,6 +143,8 @@ function world() {
                 case 32://space bar
                 if(dx > 140 && dx < 240){
                     if(doorLock == 1){
+                        dx = 440;
+                        dy = -230;
                         scene = 4;
                     }
                     if(doorLock == 0 && hasKey == 1){
@@ -184,7 +186,7 @@ function world() {
                 dir = 1;
                 if(dx <= 520){
                     if(dx == 520){
-                        dx = -500
+                        dx = -500;
                         scene = 0;
                     }
                     if(dy == 0){
@@ -295,34 +297,37 @@ function world() {
                 case 37: //left arrow key
                 lArrow = "#004d80";
                 dir = 0;
-                if(dx > -450 && dy >= -450){
+                if(dx == -390){
+                    hasKey = 1;
+                }
+                if(dx > -390 && dx <= 210){
                     dx = dx - 10;
+                }
+                if(dx > 210){
+                    dx = dx - 10;
+                    dy = dy + 10;
                 }
                 break;
                 case 39: //right arrow key
                 rArrow = "#800000";
                 dir = 1;
-                if(dx < 490  && dy >= -450){
+                if(dx < 440 && dx >= 210){
+                    dy = dy - 10;
                     dx = dx + 10;
+                }
+                if(dx < 210){
+                    dx = dx + 10;
+                }
+                if(dx >= 400 && dx <= 450 && dy == -230){
+                    dx = 200;
+                    dy = 0;
+                    scene = 1;
                 }
                 break;
                 case 38://up
-                if(dy > -450 && dx != 0){
-                    dy = dy - 10;
-                }
-                if(dx == 0){
-                    dy = dy - 10;
-                    if(dy <= -500){
-                        dy = 160;
-                        scene = 2;
-                    }
-                }
                 uArrow = "#808000";
                 break;
                 case 40://down
-                if(dy < 0){
-                    dy = dy + 10;
-                }
                 dArrow = "#196619";
                 break;
                 case 27://esc
@@ -661,6 +666,12 @@ function world() {
             OWM = new Image();
             OWM.src = 'OWM.png';
             context.drawImage(OWM, 0, 350, myCanvas.width, 200);
+        }
+        function drawPortal(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            portal = new Image();
+            portal.src = 'portal.png';
+            context.drawImage(portal, 0, 120, 180, 420);
         }
         function stars(){
                 for(var i=0;i<50;i++){
@@ -1163,10 +1174,29 @@ function world() {
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Scene TBD
+// Scene Portal Room
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 4){
+            drawRect(0,0,canvas.width,canvas.height,"#433860");
+            drawRect(0,550,canvas.width,50,"#170e19");
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[230,-230]);
+            drawRect(600, 400, 150, 150, "#65738c");
+            circ(675,395,75,0,2 * Math.PI, "#65738c");
+            drawRect(610, 410, 130, 140, "black");
+            circ(675,403,65,0,2 * Math.PI, "black");
+            stack.shift();//context.restore();
+            drawRect(800,300,500,50,"#170e19");
+            drawRect(805,305,500,40,"#2f213b");
+            drawRect(740,350,500,50,"#170e19");
+            drawRect(745,355,500,40,"#2f213b");
+            drawRect(680,400,500,50,"#170e19");
+            drawRect(685,405,500,40,"#2f213b");
+            drawRect(620,450,500,50,"#170e19");
+            drawRect(625,455,500,40,"#2f213b");
+            drawRect(560,500,500,50,"#170e19");
+            drawRect(565,505,500,40,"#2f213b");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
@@ -1176,6 +1206,7 @@ function world() {
             help();
             clear();
             DrawSpace();
+            drawPortal();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
