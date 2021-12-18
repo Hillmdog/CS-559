@@ -18,7 +18,6 @@ function world() {
     var uArrow = "#ffff00";
     var dArrow = "#33cc33";
     var SpaceBar = "#404040";
-    var theta = Math.PI/36*0;
 
     var context = canvas.getContext("2d");
     var stack;
@@ -543,7 +542,38 @@ function world() {
             context.fillStyle = SpaceBar;
             context.fillRect(10,570,100,20);
         }
+        function help(){
+            context.strokeStyle = "black";
+            context.beginPath();
+            context.lineWidth = 3;
+            //H
+
+            //E
+            context.moveTo(895,10);
+            context.lineTo(885,10);
+            context.lineTo(885,19);
+            context.lineTo(895,19);
+            context.lineTo(885,19);
+            context.lineTo(885,28);
+            context.lineTo(895,28);
+            context.stroke();
+            //L
+            context.moveTo(900,8);
+            context.lineTo(900,28);
+            context.lineTo(910,28);
+            context.stroke();
+            //P
+            context.moveTo(925,10);
+            context.lineTo(915,10);
+            context.lineTo(915,19);
+            context.lineTo(925,19);
+            context.lineTo(925,9);
+            context.moveTo(915,19);
+            context.lineTo(915,30);
+            context.stroke();
+        }
         function DrawESCP() {
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             context.beginPath();
             context.strokeStyle = "#ff0000";
             context.lineWidth = 3;
@@ -812,6 +842,7 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
+            help();
             DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
