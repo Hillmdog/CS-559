@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var scene = 5;
     var hasKey = 0;
     var doorLock = 0;
     var map = 0;
@@ -17,7 +17,6 @@ function world() {
     var lArrow = "#0099ff";
     var uArrow = "#ffff00";
     var dArrow = "#33cc33";
-    var SpaceBar = "#404040";
 
     var context = canvas.getContext("2d");
     var stack;
@@ -318,7 +317,7 @@ function world() {
                 lArrow = "#004d80";
                 dir = 0;
                 if(dx == -390){
-                    hasKey = 1;
+                    scene = 5;
                 }
                 if(dx > -390 && dx <= 210){
                     dx = dx - 10;
@@ -343,6 +342,49 @@ function world() {
                     dy = 0;
                     scene = 1;
                 }
+                break;
+                case 38://up
+                uArrow = "#808000";
+                break;
+                case 40://down
+                dArrow = "#196619";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
+                break;
+                case 77://Map
+                if(map == 0){
+                    map = 1;
+                }
+                else{
+                    map = 0;
+                }
+                break;
+            }
+        }
+       if(scene == 5){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                lArrow = "#004d80";
+                dir = 0;
+                break;
+                case 39: //right arrow key
+                rArrow = "#800000";
+                dir = 1;
                 break;
                 case 38://up
                 uArrow = "#808000";
@@ -576,10 +618,6 @@ function world() {
             context.stroke();
             context.fill();
         }
-        function DrawSpace(){
-            context.fillStyle = SpaceBar;
-            context.fillRect(10,570,100,20);
-        }
         function DrawESCP() {
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             context.beginPath();
@@ -661,6 +699,12 @@ function world() {
             portal = new Image();
             portal.src = 'portal.png';
             context.drawImage(portal, 0, 120, 180, 420);
+        }
+        function drawSpacePortal(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            spacePortal = new Image();
+            spacePortal.src = 'spacePortal.png';
+            context.drawImage(spacePortal, 820, 120, 180, 420);
         }
         function drawMenu(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
@@ -753,47 +797,31 @@ function world() {
                 }
             }
         }
-        function drawMap(){
+        function drawMap(color){
             if(scene == 0){
                 drawRect(370,100,200,120, "grey");
-                tile(160,100,200,120,"black",3);
-                tile(370,100,200,120,"black",3);
-                tile(580,100,200,120,"black",3);
-                tile(160,230,200,120,"black",3);
-                tile(580,230,200,120,"black",3);
             }
             if(scene == 1){
                 drawRect(580,100,200,120, "grey");
-                tile(160,100,200,120,"black",3);
-                tile(370,100,200,120,"black",3);
-                tile(580,100,200,120,"black",3);
-                tile(160,230,200,120,"black",3);
-                tile(580,230,200,120,"black",3);
             }
             if(scene == 2){
                 drawRect(160,100,200,120, "grey");
-                tile(160,100,200,120,"black",3);
-                tile(370,100,200,120,"black",3);
-                tile(580,100,200,120,"black",3);
-                tile(160,230,200,120,"black",3);
-                tile(580,230,200,120,"black",3);
             }
             if(scene == 3){
                 drawRect(160,230,200,120, "grey");
-                tile(160,100,200,120,"black",3);
-                tile(370,100,200,120,"black",3);
-                tile(580,100,200,120,"black",3);
-                tile(160,230,200,120,"black",3);
-                tile(580,230,200,120,"black",3);
             }
             if(scene == 4){
                 drawRect(580,230,200,120, "grey");
-                tile(160,100,200,120,"black",3);
-                tile(370,100,200,120,"black",3);
-                tile(580,100,200,120,"black",3);
-                tile(160,230,200,120,"black",3);
-                tile(580,230,200,120,"black",3);
             }
+            if(scene == 5){
+                drawRect(370,230,200,120, "grey");
+            }
+            tile(160,100,200,120,color,3);
+            tile(370,100,200,120,color,3);
+            tile(580,100,200,120,color,3);
+            tile(160,230,200,120,color,3);
+            tile(580,230,200,120,color,3);
+            tile(370,230,200,120,color,3);
         }
         function marker(){
             context.fillStyle = "red";
@@ -939,7 +967,6 @@ function world() {
             DrawDArrow(dArrow);
             DrawESCP();
             clear();
-            DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -953,7 +980,7 @@ function world() {
             stack.shift();//context.restore();
             drawRect(910,430,90,120,"#86592d");
             if(map == 1){
-                drawMap();
+                drawMap("black");
             }
             if(menu == 1){
                 drawMenu();
@@ -1020,7 +1047,6 @@ function world() {
             DrawDArrow(dArrow);
             DrawESCP();
             clear();
-            DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -1033,7 +1059,7 @@ function world() {
             Guy();
             stack.shift();//context.restore();
             if(map == 1){
-                drawMap();
+                drawMap("black");
             }
             if(menu == 1){
                 drawMenu();
@@ -1088,7 +1114,6 @@ function world() {
             DrawDArrow(dArrow);
             DrawESCP();
             clear();
-            DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -1107,7 +1132,7 @@ function world() {
             drawRect(730,500,30,150,"#995c00");
             drawRect(890,500,30,150,"#995c00");
             if(map == 1){
-                drawMap();
+                drawMap("black");
             }
             if(menu == 1){
                 drawMenu();
@@ -1156,7 +1181,6 @@ function world() {
             DrawDArrow(dArrow);
             DrawESCP();
             clear();
-            DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -1169,7 +1193,7 @@ function world() {
             Guy();
             stack.shift();//context.restore();
             if(map == 1){
-                drawMap();
+                drawMap("black");
             }
             if(menu == 1){
                 drawMenu();
@@ -1228,7 +1252,6 @@ function world() {
             DrawDArrow(dArrow);
             DrawESCP();
             clear();
-            DrawSpace();
             drawPortal();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
@@ -1242,7 +1265,42 @@ function world() {
             Guy();
             stack.shift();//context.restore();
             if(map == 1){
-                drawMap();
+                drawMap("black");
+            }
+            if(menu == 1){
+                drawMenu();
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Portal Room
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 5){
+            sky = "#000000";
+            drawRect(0,0,canvas.width,canvas.height, sky);
+            stars();
+            drawSpacePortal();
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            clear();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+            if(map == 1){
+                drawMap("#ba1e68");
             }
             if(menu == 1){
                 drawMenu();
