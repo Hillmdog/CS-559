@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 3;
+    var scene = 0;
     var hasKey = 0;
     var doorLock = 0;
     var sky = "#cceeff";
@@ -130,12 +130,12 @@ function world() {
                 break;
                 case 32://space bar
                 if(dx > 140 && dx < 240){
+                    if(doorLock == 1){
+                        scene = 4;
+                    }
                     if(doorLock == 0 && hasKey == 1){
                         doorLock = 1;
                         hasKey = 0;
-                    }
-                    if(doorLock == 1){
-                        scene = 4;
                     }
                 }
                 SpaceBar = "#1a1a1a";
@@ -235,7 +235,7 @@ function world() {
                 location.href='intro.html'
                 break;
                 case 32://space bar
-                    if(dy == 0 && dx>-430 && dx<-350){
+                    if(dy > -2 && dx< -350 && dx> -430){
                         hasKey = 1;
                     }
                 SpaceBar = "#1a1a1a";
