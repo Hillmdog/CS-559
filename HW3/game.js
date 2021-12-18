@@ -88,7 +88,7 @@ function world() {
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
-                if(dx == 450){
+                if(dx == 450 && dy == -250){
                     if(tod != 2){
                         tod = tod + 1;
                     }
@@ -351,11 +351,15 @@ function world() {
     function ChangeColor() {
         switch (event.keyCode) {
         case 37: //left arrow key
-            dir = 0;
+            if(scene == 3){
+                dir = 0;
+            }
             lArrow = "#0099ff";
             break;
         case 39: //right arrow key
-            dir = 1;
+            if(scene == 3){
+                dir = 1;
+            }
             rArrow = "#ff0000";
             break;
         case 38://up
@@ -435,6 +439,7 @@ function world() {
                     drawRect(510,475,25,45, "#cc4400");//backpack
                     drawKey();
                     drawRect(475,485,20,30, "#333333");//arm
+                    marker()
                 }
                 if(dir == 1){
                     drawRect(450,450,60,80, "#4d4d4d");
@@ -447,6 +452,7 @@ function world() {
                     drawRect(425,475,25,45, "#cc4400");
                     drawKey();
                     drawRect(465,485,20,30, "#333333");
+                    marker()
                 }
                 if(dir == 2){//swim left
                     drawRect(450,450,80,60, "#4d4d4d");//body
@@ -459,6 +465,7 @@ function world() {
                     drawRect(475,425,45,25, "#cc4400");//backpack
                     drawKey();
                     drawRect(485,465,30,20, "#333333");//arm
+                    marker()
                 }
                 if(dir == 3){//swim right
                     drawRect(450,450,80,60, "#4d4d4d");//body
@@ -471,6 +478,7 @@ function world() {
                     drawRect(465,425,45,25, "#cc4400");//backpack
                     drawKey();
                     drawRect(465,465,30,20, "#333333");//arm
+                    marker()
                 }
             }
 
@@ -777,6 +785,78 @@ function world() {
                 tile(580,230,200,120,"black",3);
             }
         }
+        function marker(){
+            context.fillStyle = "red";
+            context.strokeStyle = "black";
+            context.lineWidth = 1;
+            var Location = 0;
+            if(scene == 0){
+                if(dx == 450 && dy == -250){
+                    Location = 1;
+                }
+            }
+            if(scene == 1){
+                if(dx > 140 && dx < 240){
+                    Location = 1;
+                }
+            }
+            if(scene == 2){
+                if(dx == 1000){
+                    Location = 1;
+                }
+            }
+            if(scene == 3){
+                if(dy> -2 && dx < -350 && dx > -430){
+                    Location = 1;
+                }
+            }
+            if(scene == 4){
+                if(dx == 1000){
+                    Location = 1;
+                }
+            }
+            if(Location == 1){
+                if(dir == 0){
+                    context.moveTo(465,420);
+                    context.lineTo(495,420);
+                    context.lineTo(480,435);
+                    context.lineTo(465,420);
+                    context.fill();
+                    context.stroke();
+                }
+                if(dir == 1){
+                    context.moveTo(465,420);
+                    context.lineTo(495,420);
+                    context.lineTo(480,435);
+                    context.lineTo(465,420);
+                    context.fill();
+                    context.stroke();
+                }
+                if(dir == 2){
+                    context.moveTo(465,420);
+                    context.lineTo(495,420);
+                    context.lineTo(480,435);
+                    context.lineTo(465,420);
+                    context.fill();
+                    context.stroke();
+                }
+                if(dir == 3){
+                    context.moveTo(465,420);
+                    context.lineTo(495,420);
+                    context.lineTo(480,435);
+                    context.lineTo(465,420);
+                    context.fill();
+                    context.stroke();
+                }
+            }
+        }
+        function clear(){
+            context.strokeStyle = "black";
+            context.beginPath();
+            context.lineWidth = 3;
+            context.moveTo(0,0);
+            context.lineTo(0,0);
+        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Scene Over World
@@ -849,6 +929,7 @@ function world() {
             DrawDArrow(dArrow);
             DrawESCP();
             help();
+            clear();
             DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
@@ -926,6 +1007,8 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
+            help();
+            clear();
             DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
@@ -990,6 +1073,8 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
+            help();
+            clear();
             DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
@@ -1054,6 +1139,8 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
+            help();
+            clear();
             DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
@@ -1082,6 +1169,8 @@ function world() {
             DrawUArrow(uArrow);
             DrawDArrow(dArrow);
             DrawESCP();
+            help();
+            clear();
             DrawSpace();
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
