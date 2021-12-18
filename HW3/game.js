@@ -8,7 +8,7 @@ function world() {
     var dir = 0;
     var tod = 0;
     var scene = 0;
-    var key = 0;
+    var hasKey = 0;
     var doorLock = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
@@ -129,6 +129,9 @@ function world() {
                 location.href='intro.html'
                 break;
                 case 32://space bar
+                if(dx > 140 && dx < 240 && hasKey == 1){
+                    doorLock = 1;
+                }
                 SpaceBar = "#1a1a1a";
                 break;
                 case 27://esc
