@@ -7,8 +7,8 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 4;
-    var hasKey = 1;
+    var scene = 0;
+    var hasKey = 0;
     var doorLock = 0;
     var map = 0;
     var help = 0;
@@ -1179,8 +1179,7 @@ function world() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 4){
             drawRect(0,0,canvas.width,canvas.height,"#433860");
-            drawRect(0,550,canvas.width,50,"#170e19");
-            //bricks
+            //bricks lat
             drawRect(0,50,canvas.width,4,"#2f213b");
             drawRect(0,110,canvas.width,4,"#2f213b");
             drawRect(0,170,canvas.width,4,"#2f213b");
@@ -1188,7 +1187,19 @@ function world() {
             drawRect(0,290,canvas.width,4,"#2f213b");
             drawRect(0,350,canvas.width,4,"#2f213b");
             drawRect(0,410,canvas.width,4,"#2f213b");
-            drawRect(0,480,canvas.width,4,"#2f213b");
+            drawRect(0,470,canvas.width,4,"#2f213b");
+            drawRect(0,530,canvas.width,4,"#2f213b");
+            //bricks vert
+            var j = -10;
+            while(j < 550){
+                var i = -500 + j;
+                while(i < 1000){
+                    drawRect(i,j,4,60,"#2f213b");
+                    i = i + 100;
+                }
+                j = j + 60;
+            }
+            drawRect(0,550,canvas.width,50,"#170e19");
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.translate(stack[0],stack[0],[230,-230]);
             drawRect(600, 400, 150, 150, "#65738c");
