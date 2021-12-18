@@ -722,24 +722,28 @@ function world() {
                     drawRect(465,505,10,3, "yellow");
                     drawRect(465,505,3,6, "yellow");
                     drawRect(472,505,3,8, "yellow");
+                    arc(0,0,0,0,2 * Math.PI,"yellow", 3);
                 }
                 if(dir == 1){
                     arc(460,508,5,0,2 * Math.PI,"yellow", 3);
                     drawRect(485,505,10,3, "yellow");
                     drawRect(492,505,3,6, "yellow");
                     drawRect(485,505,3,8, "yellow");
+                    arc(0,0,0,0,2 * Math.PI,"yellow", 3);
                 }
                 if(dir == 2){
                     arc(507,460,5,0,2 * Math.PI,"yellow", 3);
                     drawRect(503,485,3,10, "yellow");
                     drawRect(506,492,6,3, "yellow");
                     drawRect(506,485,8,3, "yellow");
+                    arc(0,0,0,0,2 * Math.PI,"yellow", 3);
                 }
                 if(dir == 3){
                     arc(473,460,5,0,2 * Math.PI,"yellow", 3);
                     drawRect(473,485,3,10, "yellow");
                     drawRect(468,492,6,3, "yellow");
                     drawRect(466,485,8,3, "yellow");
+                    arc(0,0,0,0,2 * Math.PI,"yellow", 3);
                 }
             }
         }
