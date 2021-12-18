@@ -547,7 +547,12 @@ function world() {
             context.beginPath();
             context.lineWidth = 3;
             //H
-
+            context.moveTo(877,8);
+            context.lineTo(877,30);
+            context.moveTo(862,8);
+            context.lineTo(862,30);
+            context.moveTo(862,18);
+            context.lineTo(877,18);
             //E
             context.moveTo(895,10);
             context.lineTo(885,10);
