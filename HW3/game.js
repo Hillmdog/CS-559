@@ -568,6 +568,7 @@ function world() {
             context.lineTo(910,28);
             context.stroke();
             //P
+            context.lineWidth = 4;
             context.moveTo(925,10);
             context.lineTo(915,10);
             context.lineTo(915,19);
