@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 1;
+    var scene = 0;
     var key = 0;
     var doorLock = 0;
     var sky = "#cceeff";
@@ -659,12 +659,37 @@ function world() {
             //groundS
             rect(0,550,canvas.width,50,"#4a3c30");//bottom
             //door
-            rect(600, 400, 150, 150, "grey");
-            circ(675,395,75,0,2 * Math.PI, "grey");
+            rect(600, 400, 150, 150, "#666666");
+            circ(675,395,75,0,2 * Math.PI, "#666666");
             rect(610, 410, 130, 140, "black");
             circ(675,403,65,0,2 * Math.PI, "black");
             if(doorLock == 0){
-                
+                rect(610, 410, 130, 140, "#604020");
+                circ(675,403,65,0,2 * Math.PI, "#604020");
+                rect(626,358,5,192,"#261a0d");
+                rect(650,341,5,215,"#261a0d");
+                rect(672,337,5,215,"#261a0d");
+                rect(695,341,5,215,"#261a0d");
+                rect(720,358,5,192,"#261a0d");
+                //bars
+                rect(610,425,130,20,"#666666");
+                rect(610,485,130,20,"#666666");
+                //upper bar
+                circ(620,435,3,0,2 * Math.PI, "#999999");
+                circ(642,435,3,0,2 * Math.PI, "#999999");
+                circ(664,435,3,0,2 * Math.PI, "#999999");
+                circ(686,435,3,0,2 * Math.PI, "#999999");
+                circ(708,435,3,0,2 * Math.PI, "#999999");
+                circ(730,435,3,0,2 * Math.PI, "#999999");
+                //lower bar
+                circ(620,495,3,0,2 * Math.PI, "#999999");
+                circ(642,495,3,0,2 * Math.PI, "#999999");
+                circ(664,495,3,0,2 * Math.PI, "#999999");
+                circ(686,495,3,0,2 * Math.PI, "#999999");
+                circ(708,495,3,0,2 * Math.PI, "#999999");
+                circ(730,495,3,0,2 * Math.PI, "#999999");
+                //key handle
+                circ(728,460,6,0,2 * Math.PI, "#ffcc00");
             }
             //arrows
             DrawLArrow(lArrow);
