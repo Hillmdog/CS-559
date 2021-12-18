@@ -506,6 +506,20 @@ function world() {
         if(scene == 3 && dy <0){
             dy = dy + .2;
         }
+        if (scene == 5){
+            if (zeroG == 1 && dx > -450){//left
+                dx = dx - .5;
+            }
+            if (zeroG == 2 && dx < 490){//right
+                dx = dx + .5;
+            }
+            if (zeroG == 3 && dy > -450){//up
+                dy = dy - .5;
+            }
+            if (zeroG == 4 && dy < 50){//down
+                dy = dy + .5;
+            }
+        }
         if(dx == -450){
             sky = "#cceeff";
         }
@@ -1296,6 +1310,11 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 5){
+            if(dx > 440 && dx <460 && dy > -300 && dy < 0 && dir == 1){
+                scene = 4;
+                dx = -380;
+                dy = 0;
+            }
             sky = "#000000";
             drawRect(0,0,canvas.width,canvas.height, sky);
             stars();
