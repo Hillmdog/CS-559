@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var scene = 3;
     var hasKey = 0;
     var doorLock = 0;
     var sky = "#cceeff";
@@ -235,6 +235,9 @@ function world() {
                 location.href='intro.html'
                 break;
                 case 32://space bar
+                    if(dy == 0 && dx>-430 && dx<-350){
+                        hasKey = 1;
+                    }
                 SpaceBar = "#1a1a1a";
                 break;
                 case 27://esc
@@ -539,6 +542,18 @@ function world() {
             oldtree = new Image();
             oldtree.src = 'oldTree.png';
             context.drawImage(oldtree, 30, 330, 260, 260);
+        }
+        function chest(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            chest = new Image();
+            chest.src = 'chest.png';
+            context.drawImage(chest, 50, 970, 260, 260);
+        }
+        function UWbackground(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            OWM = new Image();
+            OWM.src = 'OWM.png';
+            context.drawImage(OWM, 0, 350, myCanvas.width, 200);
         }
         function stars(){
                 for(var i=0;i<50;i++){
@@ -873,7 +888,15 @@ function world() {
             rect(708,515,50,5,"#663300");
             rect(708,535,50,5,"#663300");
             stack.shift();//context.restore();
-            rect(0,0,0,0,"#663300");
+            UWbackground();
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.45,.45]);
+            chest();
+            stack.shift();//context.restore();
+            rect(410,0,30,560,"#705b3f");
+            rect(570,0,30,560,"#705b3f");
+            rect(730,0,30,560,"#705b3f");
+            rect(890,0,30,560,"#705b3f");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
@@ -895,7 +918,7 @@ function world() {
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Scene UnderWater
+// Scene TBD
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 4){
