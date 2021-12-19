@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var scene = 1;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
@@ -18,7 +18,7 @@ function world() {
     var head5 = 0;
     var zeroG = 0;
     var map = 0;
-    var menu = 1;
+    var menu = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -1170,6 +1170,14 @@ function world() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 1){
             drawRect(0,0,canvas.width,canvas.height,"#7c6450");//background
+            drawRect(200,200,5,40,"#6d5746");
+            drawRect(210,200,5,40,"#6d5746");
+            drawRect(220,215,20,5,"#6d5746");
+            drawRect(245,200,5,40,"#6d5746");
+            drawRect(255,200,5,40,"#6d5746");
+            drawRect(265,200,5,40,"#6d5746");
+            drawRect(275,200,5,40,"#6d5746");
+            drawRect(285,200,5,40,"#6d5746");
             drawRect(0,0,canvas.width,100,"#4a3c30");//top
             diamond(-10,100,"#4a3c30");
             diamond(80,70,"#4a3c30");
