@@ -7,9 +7,15 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var scene = 6;
     var hasKey = 0;
     var doorLock = 0;
+    //portal lock
+    var head1 = 0;
+    var head2 = 0;
+    var head3 = 0;
+    var head4 = 0;
+    var head5 = 0;
     var zeroG = 0;
     var map = 0;
     var menu = 0;
@@ -321,12 +327,12 @@ function world() {
                 case 37: //left arrow key
                 lArrow = "#004d80";
                 dir = 0;
-                if(dx == -390){
+                if(dx == -390 && head2 == 1 && head5 == 1){
                     dx = 450;
                     dy = -150;
                     scene = 5;
                 }
-                if(dx > -390 && dx <= 210){
+                if(dx > -450 && dx <= 210){
                     dx = dx - 10;
                 }
                 if(dx > 210){
@@ -464,15 +470,9 @@ function world() {
                 break;
                 case 38://up
                 uArrow = "#808000";
-                if(dy > -450){
-                    dy = dy - 10;
-                }
                 break;
                 case 40://down
                 dArrow = "#196619";
-                if(dy < 50){
-                    dy = dy + 10;
-                }
                 break;
                 case 82://r
                 location.href='intro.html'
@@ -807,6 +807,30 @@ function world() {
             book = new Image();
             book.src = 'book.png';
             context.drawImage(book, 0, 0, 1000, 500);
+        }
+        function drawPlanet(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            planet = new Image();
+            planet.src = 'planet.png';
+            context.drawImage(planet, 190, 60, 200, 200);
+        }
+        function drawPedestal(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            ped = new Image();
+            ped.src = 'ped.png';
+            context.drawImage(ped, -10, 400, 200, 200);
+        }
+        function drawJung(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            jungle = new Image();
+            jungle.src = 'jungle.png';
+            context.drawImage(jungle, 0, 0, 1000, 600);
+        }
+        function drawHead(x,y){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            head = new Image();
+            head.src = 'head.png';
+            context.drawImage(head, x, y, 120, 240);
         }
         function stars(){
                 for(var i=0;i<50;i++){
@@ -1352,7 +1376,10 @@ function world() {
             DrawDArrow(dArrow);
             DrawESCP();
             clear();
-            drawPortal();
+            drawPedestal();
+            if(head2 == 1 && head5 == 5){
+                drawPortal();
+            }
             //index key guy
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
@@ -1373,7 +1400,7 @@ function world() {
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Scene Portal Room
+// Scene Outer Space
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 5){
@@ -1386,6 +1413,7 @@ function world() {
             drawRect(0,0,canvas.width,canvas.height, sky);
             stars();
             drawSpacePortal();
+            drawPlanet();
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
@@ -1417,6 +1445,13 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 6){
+            drawJung();
+            drawHead(50,320);
+            drawHead(250,320);
+            drawHead(450,320);
+            drawHead(650,320);
+            drawHead(850,320);
+            drawRect(0,550,canvas.width,50, "#1b0909");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
