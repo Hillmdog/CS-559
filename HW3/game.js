@@ -8,7 +8,7 @@ function world() {
     var dir = 0;
     var tod = 0;
     var ice = 0;
-    var scene = 2;
+    var scene = 1;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
@@ -979,6 +979,12 @@ function world() {
             boat.src = 'photos/boat.png';
             context.drawImage(boat, 80, 380, 200, 200);
         }
+        function drawTorch(x,y){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            torch = new Image();
+            torch.src = 'photos/torch.png';
+            context.drawImage(torch, x, y, 100, 100);
+        }
         function drawWinterSky(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             wintersky = new Image();
@@ -1357,6 +1363,9 @@ function world() {
                 //key handle
                 circ(728,460,6,0,2 * Math.PI, "#ffcc00");
             }
+            drawTorch(100,300);
+            drawTorch(400,300);
+            drawTorch(800,300);
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
