@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 6;
+    var scene = 0;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
@@ -18,7 +18,7 @@ function world() {
     var head5 = 0;
     var zeroG = 0;
     var map = 0;
-    var menu = 0;
+    var menu = 1;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -327,7 +327,7 @@ function world() {
                 case 37: //left arrow key
                 lArrow = "#004d80";
                 dir = 0;
-                if(dx == -390 && head2 == 1 && head5 == 1){
+                if(dx == -390 && head1 == 0 && head2 == 1 && head3 == 0 && head4 == 0 && head5 == 1){
                     dx = 450;
                     dy = -150;
                     scene = 5;
@@ -479,6 +479,46 @@ function world() {
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
+                if(dx >= -390 && dx <= -350){
+                    if(head1 == 0){
+                        head1 = 1;
+                    }
+                    else{
+                        head1 = 0;
+                    }
+                }
+                if(dx >= -190 && dx <= -150){
+                    if(head2 == 0){
+                        head2 = 1;
+                    }
+                    else{
+                        head2 = 0;
+                    }
+                }
+                if(dx >= 10 && dx <= 50){
+                    if(head3 == 0){
+                        head3 = 1;
+                    }
+                    else{
+                        head3 = 0;
+                    }
+                }
+                if(dx >= 210 && dx <= 250){
+                    if(head4 == 0){
+                        head4 = 1;
+                    }
+                    else{
+                        head4 = 0;
+                    }
+                }
+                if(dx >= 410 && dx <= 450){
+                    if(head5 == 0){
+                        head5 = 1;
+                    }
+                    else{
+                        head5 = 0;
+                    }
+                }
                 break;
                 case 82://r
                 location.href='intro.html'
@@ -962,18 +1002,25 @@ function world() {
                     Location = 1;
                 }
             }
-            if(scene == 2){
-                if(dx == 1000){
-                    Location = 1;
-                }
-            }
             if(scene == 3){
                 if(dy> -2 && dx < -350 && dx > -430){
                     Location = 1;
                 }
             }
-            if(scene == 4){
-                if(dx == 1000){
+            if(scene == 6){
+                if(dx >= -390 && dx <= -350){
+                    Location = 1;
+                }
+                if(dx >= -190 && dx <= -150){
+                    Location = 1;
+                }
+                if(dx >= 10 && dx <= 50){
+                    Location = 1;
+                }
+                if(dx >= 210 && dx <= 250){
+                    Location = 1;
+                }
+                if(dx >= 410 && dx <= 450){
                     Location = 1;
                 }
             }
@@ -1377,7 +1424,7 @@ function world() {
             DrawESCP();
             clear();
             drawPedestal();
-            if(head2 == 1 && head5 == 5){
+            if(head1 == 0 && head2 == 1 && head3 == 0 && head4 == 0 && head5 == 1){
                 drawPortal();
             }
             //index key guy
@@ -1451,6 +1498,28 @@ function world() {
             drawHead(450,320);
             drawHead(650,320);
             drawHead(850,320);
+            //eyes
+            if(head1 == 1){
+                drawRect(77,369,15,8, "#54962c");
+                drawRect(127,369,16,8, "#54962c");
+            }
+            if(head2 == 1){
+                drawRect(277,369,15,8, "#54962c");
+                drawRect(327,369,16,8, "#54962c");
+            }
+            if(head3 == 1){
+                drawRect(477,369,15,8, "#54962c");
+                drawRect(527,369,16,8, "#54962c");
+            }
+            if(head4 == 1){
+                drawRect(677,369,15,8, "#54962c");
+                drawRect(727,369,16,8, "#54962c");
+            }
+            if(head5 == 1){
+                drawRect(877,369,15,8, "#54962c");
+                drawRect(927,369,16,8, "#54962c");
+            }
+            drawRect(0,0,0,0, "#1b0909");
             drawRect(0,550,canvas.width,50, "#1b0909");
             //arrows
             DrawLArrow(lArrow);
