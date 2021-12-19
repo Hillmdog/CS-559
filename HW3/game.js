@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var scene = 2;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
@@ -18,7 +18,7 @@ function world() {
     var head5 = 0;
     var zeroG = 0;
     var map = 0;
-    var menu = 1;
+    var menu = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -803,49 +803,49 @@ function world() {
         function rock(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             image = new Image();
-            image.src = 'rock.png';
+            image.src = 'photos/rock.png';
             context.drawImage(image, 880, 211, 100, 100);
         }
         function tree(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             tree = new Image();
-            tree.src = 'tree.png';
+            tree.src = 'photos/tree.png';
             context.drawImage(tree, -50, 206, 450, 500);
         }
         function oldtree(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             oldtree = new Image();
-            oldtree.src = 'oldTree.png';
+            oldtree.src = 'photos/oldTree.png';
             context.drawImage(oldtree, 30, 330, 260, 260);
         }
         function chest(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             chest = new Image();
-            chest.src = 'chest.png';
+            chest.src = 'photos/chest.png';
             context.drawImage(chest, 50, 970, 260, 260);
         }
         function UWbackground(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             OWM = new Image();
-            OWM.src = 'OWM.png';
+            OWM.src = 'photos/OWM.png';
             context.drawImage(OWM, 0, 350, myCanvas.width, 200);
         }
         function drawPortal(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             portal = new Image();
-            portal.src = 'portal.png';
+            portal.src = 'photos/portal.png';
             context.drawImage(portal, 0, 120, 180, 420);
         }
         function drawSpacePortal(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             spacePortal = new Image();
-            spacePortal.src = 'spacePortal.png';
+            spacePortal.src = 'photos/spacePortal.png';
             context.drawImage(spacePortal, 820, 120, 180, 420);
         }
         function drawMenu(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             book = new Image();
-            book.src = 'book.png';
+            book.src = 'photos/book.png';
             context.drawImage(book, 0, 0, 1000, 500);
         }
         function drawPlanet(){
@@ -857,20 +857,26 @@ function world() {
         function drawPedestal(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             ped = new Image();
-            ped.src = 'ped.png';
+            ped.src = 'photos/ped.png';
             context.drawImage(ped, -10, 400, 200, 200);
         }
         function drawJung(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             jungle = new Image();
-            jungle.src = 'jungle.png';
+            jungle.src = 'photos/jungle.png';
             context.drawImage(jungle, 0, 0, 1000, 600);
         }
         function drawHead(x,y){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             head = new Image();
-            head.src = 'head.png';
+            head.src = 'photos/head.png';
             context.drawImage(head, x, y, 120, 240);
+        }
+        function drawBoat(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            boat = new Image();
+            boat.src = 'photos/boat.png';
+            context.drawImage(boat, 80, 380, 200, 200);
         }
         function stars(){
                 for(var i=0;i<50;i++){
@@ -1264,6 +1270,7 @@ function world() {
             }
             //water
             drawRect(0,560,canvas.width,40,"#266691");
+            drawBoat();
             //Doc
             drawRect(400,520,600,20,"#995c00");
             //ladder
