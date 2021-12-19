@@ -7,17 +7,18 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 0;
+    var ice = 0;
+    var scene = 2;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
-    var head1 = 0;
-    var head2 = 0;
+    var head1 = 1;
+    var head2 = 1;
     var head3 = 0;
-    var head4 = 0;
+    var head4 = 1;
     var head5 = 0;
     var zeroG = 0;
-    var map = 1;
+    var map = 0;
     var menu = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
@@ -195,8 +196,23 @@ function world() {
                 case 37: //left arrow key
                 lArrow = "#004d80";
                 dir = 0;
-                if(dx >= -40){
-                    if(dy == 0){
+                if(ice == 0){
+                    if(dx >= -40){
+                        if(dy == 0){
+                            dx = dx - 10;
+                        }
+                    }
+                }
+                else{
+                    if(dx == -480){
+                        dx = 510
+                        dy = 40;
+                        scene = 8;
+                    }
+                    if(dx >= -40 && dy == 0){
+                        dx = dx - 10;
+                    }
+                    if(dx >= -470 && dy == 60){
                         dx = dx - 10;
                     }
                 }
@@ -204,12 +220,26 @@ function world() {
                 case 39: //right arrow key
                 rArrow = "#800000";
                 dir = 1;
-                if(dx <= 520){
-                    if(dx == 520){
-                        dx = -500;
-                        scene = 0;
+                if(ice == 0){
+                    if(dx <= 520){
+                        if(dx == 520){
+                            dx = -500;
+                            scene = 0;
+                        }
+                        if(dy == 0){
+                            dx = dx + 10;
+                        }
                     }
-                    if(dy == 0){
+                }
+                else{
+                    if(dx <= 520 && dy == 0){
+                        if(dx == 520){
+                            dx = -500;
+                            scene = 0;
+                        }
+                        dx = dx + 10;
+                    }
+                    if(dx < 0 && dy == 60){
                         dx = dx + 10;
                     }
                 }
@@ -221,11 +251,18 @@ function world() {
                 uArrow = "#808000";
                 break;
                 case 40://down
-                if(dx == 0){
-                    dy = dy + 10;
-                    if(dy == 180){
-                        dy = -500;
-                        scene = 3;
+                if(ice == 0){
+                    if(dx == 0){
+                        dy = dy + 10;
+                        if(dy == 180){
+                            dy = -500;
+                            scene = 3;
+                        }
+                    }
+                }
+                else{
+                    if(dx == 0 && dy < 60){
+                        dy = dy + 10;
                     }
                 }
                 dArrow = "#196619";
@@ -541,6 +578,60 @@ function world() {
                 break;
             }
         }
+        if(scene == 8){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                lArrow = "#004d80";
+                dir = 0;
+                if(dx > -450){
+                    dx = dx - 10;
+                }
+                break;
+                case 39: //right arrow key
+                rArrow = "#800000";
+                dir = 1;
+                if(dx == 540){
+                    scene = 2;
+                    dy = 60;
+                    dx = -490;
+                }
+                if(dx < 540){
+                    dx = dx + 10;
+                }
+                break;
+                case 38://up
+                uArrow = "#808000";
+                break;
+                case 40://down
+                dArrow = "#196619";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
+                break;
+                case 77://Map
+                if(map == 0){
+                    map = 1;
+                }
+                else{
+                    map = 0;
+                }
+                break;
+            }
+        }
     }
     function ChangeColor() {
         switch (event.keyCode) {
@@ -604,8 +695,18 @@ function world() {
         context.arc(x,y,r,s,e);
         context.stroke();
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// DRAW
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function draw(){
+        if(head1 == 1 && head2 == 1 && head3 == 0 && head4 == 1 && head5 == 0){
+            ice = 1;
+        }
+        else{
+            ice = 0;
+        }
         if(scene == 3 && dy <0){
             dy = dy + .2;
         }
@@ -878,6 +979,12 @@ function world() {
             boat.src = 'photos/boat.png';
             context.drawImage(boat, 80, 380, 200, 200);
         }
+        function drawWinterSky(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            wintersky = new Image();
+            wintersky.src = 'photos/wintersky.png';
+            context.drawImage(wintersky, 0, 0, 1000, 600);
+        }
         function stars(){
                 for(var i=0;i<50;i++){
             context.beginPath();
@@ -991,7 +1098,7 @@ function world() {
             if(scene == 8){
                 drawRect(25,200,180,108, "grey");
             }
-            if(scene == 8){
+            if(scene == 9){
                 drawRect(220,460,180,108, "grey");
             }
             tile(220,200,180,108,color,3);//2
@@ -1002,7 +1109,7 @@ function world() {
             tile(415,330,180,108,color,3);//5
             tile(805,200,180,108,color,3);//6
             //tile(610,70,180,108,color,3);//7
-            //tile(25,200,180,108,color,3);//8
+            tile(25,200,180,108,color,3);//8
             //tile(220,460,180,108,color,3);//9
         }
         function marker(){
@@ -1181,7 +1288,9 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 1){
-            drawRect(0,0,canvas.width,canvas.height,"#7c6450");//background
+            //background
+            drawRect(0,0,canvas.width,canvas.height,"#7c6450");
+            //portal code
             drawRect(200,200,5,40,"#6d5746");
             drawRect(210,200,5,40,"#6d5746");
             drawRect(220,215,20,5,"#6d5746");
@@ -1190,7 +1299,18 @@ function world() {
             drawRect(265,200,5,40,"#6d5746");
             drawRect(275,200,5,40,"#6d5746");
             drawRect(285,200,5,40,"#6d5746");
-            drawRect(0,0,canvas.width,100,"#4a3c30");//top
+            //ice code
+            drawRect(815,400,5,40,"#6d5746");
+            drawRect(825,415,20,5,"#6d5746");
+            drawRect(850,400,5,40,"#6d5746");
+            drawRect(860,400,5,40,"#6d5746");
+            drawRect(870,415,20,5,"#6d5746");
+            drawRect(895,400,5,40,"#6d5746");
+            drawRect(905,400,5,40,"#6d5746");
+            drawRect(915,400,5,40,"#6d5746");
+            drawRect(925,400,5,40,"#6d5746");
+            //top
+            drawRect(0,0,canvas.width,100,"#4a3c30");
             diamond(-10,100,"#4a3c30");
             diamond(80,70,"#4a3c30");
             diamond(120,90,"#4a3c30");
@@ -1268,41 +1388,54 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 2){
-            if(tod == 0){//day
-                sky = "#cceeff";
-                drawRect(0,0,canvas.width,canvas.height, sky);
-                stack.unshift(mat3.clone(stack[0]));//context.save();
-                mat3.translate(stack[0],stack[0],[700,-50]);
-                sunMoon();
-                stack.shift();//context.restore();
-            }
-            if(tod == 1){//sunset
-               sunset();
-            }
-            if(tod == 2){//night
-                sky = "#002233";
-                drawRect(0,0,canvas.width,canvas.height, sky);
-                stars();
-                stack.unshift(mat3.clone(stack[0]));//context.save();
-                mat3.translate(stack[0],stack[0],[700,-50]);
-                sunMoon();
-                stack.shift();//context.restore();
-            }
+        var ladderC = "#663300";
+        var pillar = "#995c00";
+            if(ice != 1){
+                if(tod == 0){//day
+                    sky = "#cceeff";
+                    drawRect(0,0,canvas.width,canvas.height, sky);
+                    stack.unshift(mat3.clone(stack[0]));//context.save();
+                    mat3.translate(stack[0],stack[0],[700,-50]);
+                    sunMoon();
+                    stack.shift();//context.restore();
+                }
+                if(tod == 1){//sunset
+                   sunset();
+                }
+                if(tod == 2){//night
+                    sky = "#002233";
+                    drawRect(0,0,canvas.width,canvas.height, sky);
+                    stars();
+                    stack.unshift(mat3.clone(stack[0]));//context.save();
+                    mat3.translate(stack[0],stack[0],[700,-50]);
+                    sunMoon();
+                    stack.shift();//context.restore();
+                }
             //water
             drawRect(0,560,canvas.width,40,"#266691");
+            }
+            else{
+                //winter sky
+                drawWinterSky();
+                //ice
+                drawRect(0,560,canvas.width,40,"#cceeff");
+                //pillars
+                ladderC = "#47331f";
+                pillar = "#6b532e";
+            }
             drawBoat();
             //Doc
-            drawRect(400,520,600,20,"#995c00");
+            drawRect(400,520,600,20,pillar);
             //ladder
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.translate(stack[0],stack[0],[-250,190]);
-            drawRect(710,295,5,250,"#663300");
-            drawRect(750,295,5,250,"#663300");
-            drawRect(708,315,50,5,"#663300");
-            drawRect(708,335,50,5,"#663300");
-            drawRect(708,355,50,5,"#663300");
-            drawRect(708,375,50,5,"#663300");
-            drawRect(708,395,50,5,"#663300");
+            drawRect(710,295,5,250,ladderC);
+            drawRect(750,295,5,250,ladderC);
+            drawRect(708,315,50,5,ladderC);
+            drawRect(708,335,50,5,ladderC);
+            drawRect(708,355,50,5,ladderC);
+            drawRect(708,375,50,5,ladderC);
+            drawRect(708,395,50,5,ladderC);
             stack.shift();//context.restore();
             drawRect(0,0,0,0,"#663300");
             //arrows
@@ -1325,10 +1458,10 @@ function world() {
             Guy();
             stack.shift();//context.restore();
             //Doc Pillars
-            drawRect(410,500,30,150,"#995c00");
-            drawRect(570,500,30,150,"#995c00");
-            drawRect(730,500,30,150,"#995c00");
-            drawRect(890,500,30,150,"#995c00");
+            drawRect(410,500,30,150,pillar);
+            drawRect(570,500,30,150,pillar);
+            drawRect(730,500,30,150,pillar);
+            drawRect(890,500,30,150,pillar);
             if(map == 1){
                 drawMap("black");
             }
@@ -1548,6 +1681,40 @@ function world() {
             }
             drawRect(0,0,0,0, "#1b0909");
             drawRect(0,550,canvas.width,50, "#1b0909");
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            clear();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+            if(map == 1){
+                drawMap("black");
+            }
+            if(menu == 1){
+                drawMenu();
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Ice
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 8){
+            drawWinterSky();
+            //ice
+            drawRect(0,560,canvas.width,40,"#cceeff");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
