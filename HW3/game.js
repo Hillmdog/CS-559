@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 2;
+    var scene = 0;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
@@ -18,7 +18,7 @@ function world() {
     var head5 = 0;
     var zeroG = 0;
     var map = 0;
-    var menu = 0;
+    var menu = 1;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -851,7 +851,7 @@ function world() {
         function drawPlanet(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             planet = new Image();
-            planet.src = 'planet.png';
+            planet.src = 'photos/planet.png';
             context.drawImage(planet, 190, 60, 200, 200);
         }
         function drawPedestal(){
