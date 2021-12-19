@@ -7,7 +7,7 @@ function world() {
     var dx2 = 0;
     var dir = 0;
     var tod = 0;
-    var scene = 1;
+    var scene = 0;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
@@ -17,7 +17,7 @@ function world() {
     var head4 = 0;
     var head5 = 0;
     var zeroG = 0;
-    var map = 0;
+    var map = 1;
     var menu = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
@@ -965,33 +965,45 @@ function world() {
         }
         function drawMap(color){
             if(scene == 0){
-                drawRect(370,100,200,120, "grey");
+                drawRect(415,200,180,108, "grey");
             }
             if(scene == 1){
-                drawRect(580,100,200,120, "grey");
+                drawRect(610,200,180,108, "grey");
             }
             if(scene == 2){
-                drawRect(160,100,200,120, "grey");
+                drawRect(220,200,180,108, "grey");
             }
             if(scene == 3){
-                drawRect(160,230,200,120, "grey");
+                drawRect(220,330,180,108, "grey");
             }
             if(scene == 4){
-                drawRect(580,230,200,120, "grey");
+                drawRect(610,330,180,108, "grey");
             }
             if(scene == 5){
-                drawRect(370,230,200,120, "grey");
+                drawRect(415,330,180,108, "grey");
             }
             if(scene == 6){
-                drawRect(790,100,200,120, "grey");
+                drawRect(805,200,180,108, "grey");
             }
-            tile(160,100,200,120,color,3);
-            tile(370,100,200,120,color,3);
-            tile(580,100,200,120,color,3);
-            tile(160,230,200,120,color,3);
-            tile(580,230,200,120,color,3);
-            tile(370,230,200,120,color,3);
-            tile(790,100,200,120,color,3);
+            if(scene == 7){
+                drawRect(610,70,180,108, "grey");
+            }
+            if(scene == 8){
+                drawRect(25,200,180,108, "grey");
+            }
+            if(scene == 8){
+                drawRect(220,460,180,108, "grey");
+            }
+            tile(220,200,180,108,color,3);//2
+            tile(415,200,180,108,color,3);//0
+            tile(610,200,180,108,color,3);//1
+            tile(220,330,180,108,color,3);//3
+            tile(610,330,180,108,color,3);//4
+            tile(415,330,180,108,color,3);//5
+            tile(805,200,180,108,color,3);//6
+            //tile(610,70,180,108,color,3);//7
+            //tile(25,200,180,108,color,3);//8
+            //tile(220,460,180,108,color,3);//9
         }
         function marker(){
             context.fillStyle = "red";
@@ -1503,7 +1515,7 @@ function world() {
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Scene TBD
+// Scene Jungle
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 6){
