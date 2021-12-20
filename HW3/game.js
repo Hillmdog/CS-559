@@ -10,11 +10,12 @@ function world() {
     var ice = 0;
     var scene = 0;
     var hasKey = 0;
+    var hasLantern = 0;
     var doorLock = 0;
     //portal lock
     var head1 = 0;
-    var head2 = 0;
-    var head3 = 0;
+    var head2 = 1;
+    var head3 = 1;
     var head4 = 0;
     var head5 = 0;
     var zeroG = 0;
@@ -610,6 +611,14 @@ function world() {
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
+                if(dx == -290){
+                    if(hasLantern == 0){
+                        hasLantern = 1;
+                    }
+                    else{
+                        hasLantern = 0;
+                    }
+                }
                 break;
                 case 82://r
                 location.href='intro.html'
@@ -746,6 +755,9 @@ function world() {
                     drawRect(450,510,60,20, "#cc8800");//waist
                     drawRect(450,510,60,5, "#000000");//belt
                     drawRect(510,475,25,45, "#cc4400");//backpack
+                    if(hasLantern == 1){
+                        drawLantern(455+(dx/1000000),500+(dy/1000000));
+                    }
                     drawKey();
                     drawRect(475,485,20,30, "#333333");//arm
                     marker()
@@ -759,6 +771,9 @@ function world() {
                     drawRect(450,510,60,20, "#cc8800");
                     drawRect(450,510,60,5, "#000000");
                     drawRect(425,475,25,45, "#cc4400");
+                    if(hasLantern == 1){
+                        drawLantern(450+(dx/1000000),500+(dy/1000000));
+                    }
                     drawKey();
                     drawRect(465,485,20,30, "#333333");
                     marker()
@@ -985,6 +1000,18 @@ function world() {
             torch.src = 'photos/torch.png';
             context.drawImage(torch, x, y, 100, 100);
         }
+        function drawLantern(x,y){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            lantern = new Image();
+            lantern.src = 'photos/lantern.png';
+            context.drawImage(lantern, x, y, 60, 60);
+        }
+        function drawPine(x,y){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            pine = new Image();
+            pine.src = 'photos/pine.png';
+            context.drawImage(pine, x, y, 200, 400);
+        }
         function drawWinterSky(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             wintersky = new Image();
@@ -1152,6 +1179,11 @@ function world() {
                     Location = 1;
                 }
                 if(dx >= 410 && dx <= 450){
+                    Location = 1;
+                }
+            }
+            if(scene == 8){
+                if(dx == -290){
                     Location = 1;
                 }
             }
@@ -1724,6 +1756,16 @@ function world() {
             drawWinterSky();
             //ice
             drawRect(0,560,canvas.width,40,"#cceeff");
+            drawRect(0,560,400,40,"#80664d");
+            drawPine(-50,200);
+            drawPine(220,200);
+            if(hasLantern == 0){
+                drawLantern(160,450);
+            }
+            drawRect(153,420,10,150,"#6b532e");
+            drawRect(153,420,40,10,"#6b532e");
+            drawRect(183,420,10,30,"#6b532e");
+            //drawRect(0,560,400,10,"white");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
