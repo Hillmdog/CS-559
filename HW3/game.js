@@ -8,18 +8,18 @@ function world() {
     var dir = 0;
     var tod = 0;
     var ice = 0;
-    var scene = 1;
+    var scene = 0;
     var hasKey = 0;
     var doorLock = 0;
     //portal lock
-    var head1 = 1;
-    var head2 = 1;
+    var head1 = 0;
+    var head2 = 0;
     var head3 = 0;
-    var head4 = 1;
+    var head4 = 0;
     var head5 = 0;
     var zeroG = 0;
     var map = 0;
-    var menu = 0;
+    var menu = 1;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
