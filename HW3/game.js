@@ -26,7 +26,6 @@ function world() {
     var lArrow = "#0099ff";
     var uArrow = "#ffff00";
     var dArrow = "#33cc33";
-
     var context = canvas.getContext("2d");
     var stack;
 
@@ -641,17 +640,77 @@ function world() {
                 break;
             }
         }
+        if(scene == 9){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                    lArrow = "#004d80";
+                    dir = 2;
+                    if(dx > -450){
+                        dx = dx - 10;
+                    }
+                break;
+                case 39: //right arrow key
+                    rArrow = "#800000";
+                    dir = 3;
+                    if(dx < 490){
+                        dx = dx + 10;
+                    }
+                break;
+                case 38://up
+                uArrow = "#808000";
+                    if(dy <= -490){
+                        scene = 3;
+                        dx = 340;
+                        dy = 40;
+                    }
+                    if(dy > -510){
+                        dy = dy - 10;
+                    }
+                break;
+                case 40://down
+                dArrow = "#196619";
+                    if(dy < 0){
+                        dy = dy + 10;
+                    }
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
+                break;
+                case 77://Map
+                if(map == 0){
+                    map = 1;
+                }
+                else{
+                    map = 0;
+                }
+                break;
+            }
+        }
     }
     function ChangeColor() {
         switch (event.keyCode) {
         case 37: //left arrow key
-            if(scene == 3){
+            if(scene == 3 || scene == 9){
                 dir = 0;
             }
             lArrow = "#0099ff";
             break;
         case 39: //right arrow key
-            if(scene == 3){
+            if(scene == 3 || scene == 9){
                 dir = 1;
             }
             rArrow = "#ff0000";
@@ -710,15 +769,30 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function draw(){
+        //ice on docs
         if(head1 == 1 && head2 == 1 && head3 == 0 && head4 == 1 && head5 == 0){
             ice = 1;
         }
         else{
             ice = 0;
         }
-        if(scene == 3 && dy <0){
-            dy = dy + .2;
+        //under water
+        if(scene == 3 || scene == 9){
+            if(dy > 50){
+               scene = 9;
+               dy = -500;
+               dx = 0;
+            }
+            if(dy <0){
+                dy = dy + .2;
+            }
+            else{
+                if(dx >= 320 && dx <= 370 && scene == 3){
+                    dy = dy + .2;
+                }
+            }
         }
+        //gravity
         if (scene == 5){
             if (zeroG == 1 && dx > -450){//left
                 dx = dx - .5;
@@ -788,6 +862,9 @@ function world() {
                     drawRect(510,450,5,60, "#000000");//belt
                     drawRect(475,425,45,25, "#cc4400");//backpack
                     drawKey();
+                    if(hasLantern == 1){
+                        drawLantern(480+(dx/1000000),475+(dy/1000000));
+                    }
                     drawRect(485,465,30,20, "#333333");//arm
                     marker()
                 }
@@ -800,6 +877,9 @@ function world() {
                     drawRect(450,450,20,60, "#cc8800");//waist
                     drawRect(465,450,5,60, "#000000");//belt
                     drawRect(465,425,45,25, "#cc4400");//backpack
+                    if(hasLantern == 1){
+                        drawLantern(445+(dx/1000000),475+(dy/1000000));
+                    }
                     drawKey();
                     drawRect(465,465,30,20, "#333333");//arm
                     marker()
@@ -1018,6 +1098,12 @@ function world() {
             wintersky.src = 'photos/wintersky.png';
             context.drawImage(wintersky, 0, 0, 1000, 600);
         }
+        function drawDarkCave(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            darkCave = new Image();
+            darkCave.src = 'photos/darkCave.png';
+            context.drawImage(darkCave, 0, 0, 1000, 600);
+        }
         function stars(){
                 for(var i=0;i<50;i++){
             context.beginPath();
@@ -1070,6 +1156,27 @@ function world() {
             context.fillStyle = grd;
             context.fillRect(0, 0, canvas.width, canvas.height);
             context.fillStyle = "#ffc94f";
+        }
+        function drawDarkness(){
+            movex = dx/100000;
+            movey = dy/100000;
+            context.fillStyle = "black";
+            context.beginPath();
+            context.arc(movex - 20 + 500,movey + 500,100,Math.PI,0);
+            context.lineTo(movex + 2000 + 500,movey + 500);//right
+            context.lineTo(movex + 2000 + 500,movey - 1000 + 500);//top right
+            context.lineTo(movex - 2000 + 500,movey - 1000 + 500);//top left
+            context.lineTo(movex - 2000 + 500,movey + 500);//left
+            context.lineTo(movex - 20 + 500,movey + 500);//end
+            context.fill();
+            context.beginPath();
+            context.arc(movex - 20 + 500,movey + 500,100,0,Math.PI);
+            context.lineTo(movex - 2000 + 500,movey + 500);//left
+            context.lineTo(movex - 2000 + 500,movey + 1000 + 500);//top left
+            context.lineTo(movex + 2000 + 500,movey + 1000 + 500);//top right
+            context.lineTo(movex + 2000 + 500,movey + 500);//right
+            context.lineTo(movex - 20 + 500,movey + 500);//end
+            context.fill();
         }
         function drawKey(){
             if(hasKey == 1){
@@ -1143,7 +1250,7 @@ function world() {
             tile(805,200,180,108,color,3);//6
             //tile(610,70,180,108,color,3);//7
             tile(25,200,180,108,color,3);//8
-            //tile(220,460,180,108,color,3);//9
+            tile(220,460,180,108,color,3);//9
         }
         function marker(){
             context.fillStyle = "red";
@@ -1312,7 +1419,7 @@ function world() {
             mat3.translate(stack[0],stack[0],[dx,dy]);
             Guy();
             stack.shift();//context.restore();
-            drawRect(910,430,90,120,"#86592d");
+            drawRect(910,430,90,200,"#86592d");
             if(map == 1){
                 drawMap("black");
             }
@@ -1519,6 +1626,7 @@ function world() {
             underWater();
             //floor
             drawRect(0,550,canvas.width,50,"#332200");
+            drawRect(770,550,110,70,"#0a1d29");
             //ladder
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.translate(stack[0],stack[0],[-250,-450]);
@@ -1786,6 +1894,46 @@ function world() {
             stack.shift();//context.restore();
             if(map == 1){
                 drawMap("black");
+            }
+            if(menu == 1){
+                drawMenu();
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Dark
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 9){
+            drawDarkCave();
+            drawRect(0,550,canvas.width,50,"#1b1b09");
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+            if(hasLantern == 1){
+                drawDarkness();
+            }
+            else{
+                //drawRect(0,0,canvas.width,canvas.height,"black");
+            }
+            drawRect(0,0,0,0,"#6b532e");
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            clear();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            if(map == 1){
+                drawMap("#ba1e68");
             }
             if(menu == 1){
                 drawMenu();
