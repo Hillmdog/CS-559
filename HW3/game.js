@@ -12,6 +12,8 @@ function world() {
     var hasKey = 0;
     var hasLantern = 0;
     var doorLock = 0;
+    var snow = [];
+    var numberSnow = 2000;
     //portal lock
     var head1 = 0;
     var head2 = 1;
@@ -29,6 +31,11 @@ function world() {
     var context = canvas.getContext("2d");
     var stack;
 
+    for(var i=0;i<numberSnow;i++){
+        snow.push({
+                y:Math.floor(Math.random() * (600 - (-300))) - 300, dx:0,dy:0,
+                x:Math.floor(Math.random() * (1000 - (-500) )) - 500});
+    }
     function getKeyAndMove() {
         if(scene == 0){
             switch (event.keyCode) {
@@ -765,7 +772,7 @@ function world() {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// DRAW
+// Handle Movements
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function draw(){
@@ -810,9 +817,33 @@ function world() {
         if(dx == -450){
             sky = "#cceeff";
         }
-            window.requestAnimationFrame(draw);
-            stack =[mat3.create()];
-            canvas.width=canvas.width;
+        function drawSnow(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            for(var i=0;i<numberSnow;i++){
+                var snowAt = snow[i];
+                if(snowAt.dx > 1000 || snowAt.dy > 600){
+                    snowAt.dx = 0;
+                    snowAt.dy = 0;
+                }
+                else{
+                    snowAt.dx = snowAt.dx + 1;
+                    snowAt.dy = snowAt.dy + 3;
+                }
+                context.beginPath();
+                context.arc(snowAt.x + snowAt.dx, snowAt.y + snowAt.dy, 1, 0, 2 * Math.PI);
+                context.lineWidth = 1;
+                context.strokeStyle = "white";
+                context.stroke();
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// DRAW
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        window.requestAnimationFrame(draw);
+        stack =[mat3.create()];
+        canvas.width=canvas.width;
         dx2 = moveClouds(dx2);
 
         function Guy(){
@@ -1610,6 +1641,9 @@ function world() {
             drawRect(570,500,30,150,pillar);
             drawRect(730,500,30,150,pillar);
             drawRect(890,500,30,150,pillar);
+            if(ice == 1){
+                drawSnow();
+            }
             if(map == 1){
                 drawMap("black");
             }
@@ -1892,6 +1926,8 @@ function world() {
             mat3.translate(stack[0],stack[0],[dx,dy]);
             Guy();
             stack.shift();//context.restore();
+            drawSnow();
+             drawRect(0,0,0,0,"#6b532e");
             if(map == 1){
                 drawMap("black");
             }
