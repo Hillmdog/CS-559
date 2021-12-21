@@ -8,7 +8,7 @@ function world() {
     var dir = 0;
     var tod = 0;
     var ice = 0;
-    var scene = 9;
+    var scene = 0;
     var hasKey = 0;
     var hasLantern = 0;
     var doorLock = 0;
@@ -36,7 +36,7 @@ function world() {
 
     var zeroG = 0;
     var map = 0;
-    var menu = 0;
+    var menu = 1;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -724,6 +724,46 @@ function world() {
                 else{
                     map = 0;
                 }
+                break;
+                case 49:
+                if(l1 == 0){l1 = 1}
+                else{l1 = 0}
+                break;
+                case 50:
+                if(l2 == 0){l2 = 1}
+                else{l2 = 0}
+                break;
+                case 51:
+                if(l3 == 0){l3 = 1}
+                else{l3 = 0}
+                break;
+                case 52:
+                if(l4 == 0){l4 = 1}
+                else{l4 = 0}
+                break;
+                case 53:
+                if(l5 == 0){l5 = 1}
+                else{l5 = 0}
+                break;
+                case 54:
+                if(l6 == 0){l6 = 1}
+                else{l6 = 0}
+                break;
+                case 55:
+                if(l7 == 0){l7 = 1}
+                else{l7 = 0}
+                break;
+                case 56:
+                if(l8 == 0){l8 = 1}
+                else{l8 = 0}
+                break;
+                case 57:
+                if(l9 == 0){l9 = 1}
+                else{l9 = 0}
+                break;
+                case 58:
+                if(l0 == 0){l0 = 1}
+                else{l0 = 0}
                 break;
             }
         }
@@ -2070,7 +2110,7 @@ function world() {
                 drawDarkness();
             }
             else{
-                //drawRect(0,0,canvas.width,canvas.height,"black");
+                drawRect(0,0,canvas.width,canvas.height,"black");
             }
             drawRect(0,0,0,0,"#6b532e");
             //arrows
@@ -2086,7 +2126,7 @@ function world() {
             mat3.translate(stack[0],stack[0],[-281,-303]);
             Guy();
             stack.shift();//context.restore();
-            if(keyPad == 0){
+            if(keyPad == 1){
                 drawRect(350,75,300,450,"#556677");
                 drawRect(360,85,280,430,"#8899aa");
                 drawRect(370,125,80,80,"#556677");//1
