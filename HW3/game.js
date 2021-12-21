@@ -8,10 +8,12 @@ function world() {
     var dir = 0;
     var tod = 0;
     var ice = 0;
-    var scene = 5;
+    var scene = 9;
     var hasKey = 0;
     var hasLantern = 0;
     var doorLock = 0;
+    var labDoor = 0;
+    var keyPad = 0;
     var snow = [];
     var numberSnow = 2000;
     //portal lock
@@ -20,6 +22,18 @@ function world() {
     var head3 = 1;
     var head4 = 0;
     var head5 = 0;
+    //code
+    var l1 = 0;
+    var l2 = 0;
+    var l3 = 0;
+    var l4 = 0;
+    var l5 = 0;
+    var l6 = 0;
+    var l7 = 0;
+    var l8 = 0;
+    var l9 = 0;
+    var l0 = 0;
+
     var zeroG = 0;
     var map = 0;
     var menu = 0;
@@ -685,6 +699,12 @@ function world() {
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
+                if(dx == 250 && keyPad == 0){
+                    keyPad = 1;
+                }
+                else{
+                    keyPad = 0;
+                }
                 break;
                 case 82://r
                 location.href='intro.html'
@@ -1201,6 +1221,18 @@ function world() {
             code.src = 'photos/code.png';
             context.drawImage(code, 20, 500, 100, 100);
         }
+        function drawDoorC(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            door = new Image();
+            door.src = 'photos/door.png';
+            context.drawImage(door, 740, 380, 300, 200);
+        }
+        function drawDoorO(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            doorOpen = new Image();
+            doorOpen.src = 'photos/doorOpen.png';
+            context.drawImage(doorOpen, 793, 386, 200, 186);
+        }
         function stars(){
                 for(var i=0;i<50;i++){
             context.beginPath();
@@ -1388,6 +1420,11 @@ function world() {
             }
             if(scene == 8){
                 if(dx == -290){
+                    Location = 1;
+                }
+            }
+            if(scene == 9){
+                if(dx == 250){
                     Location = 1;
                 }
             }
@@ -2010,6 +2047,17 @@ function world() {
         if(scene == 9){
             drawDarkCave();
             drawRect(0,550,canvas.width,50,"#1b1b09");
+            drawRect(750,00,300,600,"#1b1b09");
+            drawRect(765,450,20,30,"#556677");
+            drawRect(768,453,14,24,"#8899aa");
+            if(labDoor == 0){
+                circ(778,457,2,0,2 * Math.PI, "#ff3300");
+                drawDoorC();
+            }
+            else{
+                circ(778,457,2,0,2 * Math.PI, "#66ff66");
+                drawDoorO();
+            }
             //main character
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.translate(stack[0],stack[0],[dx,dy]);
@@ -2035,10 +2083,40 @@ function world() {
             mat3.translate(stack[0],stack[0],[-281,-303]);
             Guy();
             stack.shift();//context.restore();
-            if(map == 1){
+            if(keyPad == 0){
+                drawRect(350,75,300,450,"#556677");
+                drawRect(360,85,280,430,"#8899aa");
+                drawRect(370,125,80,80,"#556677");//1
+                drawRect(460,125,80,80,"#556677");//2
+                drawRect(550,125,80,80,"#556677");//3
+                drawRect(370,215,80,80,"#556677");//4
+                drawRect(460,215,80,80,"#556677");//5r
+                drawRect(550,215,80,80,"#556677");//6
+                drawRect(370,305,80,80,"#556677");//7
+                drawRect(460,305,80,80,"#556677");//8
+                drawRect(550,305,80,80,"#556677");//9
+                drawRect(460,395,80,80,"#556677");//8
+                if(l1==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l2==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l3==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l4==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l5==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l6==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l7==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l8==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l9==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(l0==1){drawRect(370,125,80,80,"#ff3300")};//1
+                if(labDoor == 0){
+                    circ(610,105,10,0,2 * Math.PI, "#ff3300");
+                }
+                else{
+                    circ(610,105,10,0,2 * Math.PI, "#66ff66");
+                }
+            }
+            if(map == 1 && keyPad == 0){
                 drawMap("#ba1e68");
             }
-            if(menu == 1){
+            if(menu == 1 && keyPad != 1){
                 drawMenu();
             }
         }
