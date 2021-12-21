@@ -8,7 +8,7 @@ function world() {
     var dir = 0;
     var tod = 0;
     var ice = 0;
-    var scene = 0;
+    var scene = 5;
     var hasKey = 0;
     var hasLantern = 0;
     var doorLock = 0;
@@ -22,7 +22,7 @@ function world() {
     var head5 = 0;
     var zeroG = 0;
     var map = 0;
-    var menu = 1;
+    var menu = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -707,6 +707,66 @@ function world() {
                 break;
             }
         }
+        if(scene == 7){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                    lArrow = "#004d80";
+                    dir = 2;
+                    if(dx > -450){
+                        dx = dx - 10;
+                    }
+                break;
+                case 39: //right arrow key
+                    rArrow = "#800000";
+                    dir = 3;
+                    if(dx < 490){
+                        dx = dx + 10;
+                    }
+                break;
+                case 38://up
+                uArrow = "#808000";
+                    if(dy <= -490){
+                        scene = 3;
+                        dx = 340;
+                        dy = 40;
+                    }
+                    if(dy > -510){
+                        dy = dy - 10;
+                    }
+                break;
+                case 40://down
+                dArrow = "#196619";
+                    if(dy < 0){
+                        dy = dy + 10;
+                    }
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
+                break;
+                case 77://Map
+                if(map == 0){
+                    map = 1;
+                }
+                else{
+                    map = 0;
+                }
+                break;
+            }
+        }
     }
     function ChangeColor() {
         switch (event.keyCode) {
@@ -1135,6 +1195,12 @@ function world() {
             darkCave.src = 'photos/darkCave.png';
             context.drawImage(darkCave, 0, 0, 1000, 600);
         }
+        function drawCode(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            code = new Image();
+            code.src = 'photos/code.png';
+            context.drawImage(code, 20, 500, 100, 100);
+        }
         function stars(){
                 for(var i=0;i<50;i++){
             context.beginPath();
@@ -1264,7 +1330,7 @@ function world() {
                 drawRect(805,200,180,108, "grey");
             }
             if(scene == 7){
-                drawRect(610,70,180,108, "grey");
+                drawRect(415,460,180,108, "grey");
             }
             if(scene == 8){
                 drawRect(25,200,180,108, "grey");
@@ -1279,7 +1345,7 @@ function world() {
             tile(610,330,180,108,color,3);//4
             tile(415,330,180,108,color,3);//5
             tile(805,200,180,108,color,3);//6
-            //tile(610,70,180,108,color,3);//7
+            tile(415,460,180,108,color,3);//7
             tile(25,200,180,108,color,3);//8
             tile(220,460,180,108,color,3);//9
         }
@@ -1799,7 +1865,7 @@ function world() {
                 dx = -380;
                 dy = 0;
             }
-            sky = "#000000";
+            sky = "#0d0d0d";
             drawRect(0,0,canvas.width,canvas.height, sky);
             stars();
             drawSpacePortal();
@@ -1822,6 +1888,7 @@ function world() {
             mat3.translate(stack[0],stack[0],[dx,dy]);
             Guy();
             stack.shift();//context.restore();
+            drawCode();
             if(map == 1){
                 drawMap("#ba1e68");
             }
@@ -1966,6 +2033,37 @@ function world() {
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
             mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            if(map == 1){
+                drawMap("#ba1e68");
+            }
+            if(menu == 1){
+                drawMenu();
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Code Room
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 7){
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            clear();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
             Guy();
             stack.shift();//context.restore();
             if(map == 1){
