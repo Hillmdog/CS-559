@@ -983,7 +983,7 @@ function world() {
             ice = 0;
         }
         //under water
-        if(scene == 3 || scene == 9){
+        if(scene == 3 || scene == 9 || scene == 10){
             if(dy > 50){
                scene = 9;
                dy = -500;
@@ -1337,6 +1337,12 @@ function world() {
             darkCave = new Image();
             darkCave.src = 'photos/darkCave.png';
             context.drawImage(darkCave, 0, 0, 1000, 600);
+        }
+        function drawCrystalCave(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            crystalCave = new Image();
+            crystalCave.src = 'photos/crystalCave.png';
+            context.drawImage(crystalCave, 0, 0, 1000, 600);
         }
         function drawCode(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
@@ -2292,6 +2298,21 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 10){
+            drawCrystalCave();
+            drawRect(850,0,150,400,"#303336");
+            drawRect(0,550,canvas.width,50,"#303336");
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+            if(hasLantern == 1){
+                //drawDarkness();
+            }
+            else{
+                drawRect(0,0,canvas.width,canvas.height,"black");
+            }
+            drawRect(0,0,0,0,"#6b532e");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
@@ -2303,11 +2324,6 @@ function world() {
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.scale(stack[0],stack[0],[0.3,.3]);
             mat3.translate(stack[0],stack[0],[-281,-303]);
-            Guy();
-            stack.shift();//context.restore();
-            //main character
-            stack.unshift(mat3.clone(stack[0]));//context.save();
-            mat3.translate(stack[0],stack[0],[dx,dy]);
             Guy();
             stack.shift();//context.restore();
             if(map == 1){
