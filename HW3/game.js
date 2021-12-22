@@ -863,14 +863,29 @@ function world() {
                 case 39: //right arrow key
                 rArrow = "#800000";
                 dir = 3;
-                if(dx < 490){
-                    dx = dx + 10;
+                if(dx == 530){
+                    scene = 9;
+                    dx = -500;
+                    dy = 0;
+                }
+                if(dx < 530){
+                    if(dy > -50){
+                        dx = dx + 10;
+                    }
+                    if(dy > -450 && dx <= 330){
+                        dx = dx + 10;
+                    }
                 }
                 break;
                 case 38://up
-                if(dy > -450){
-                    dy = dy - 10;
-                }
+                    if(dx > 350){
+                        if(dy > -50){
+                            dy = dy - 10;
+                        }
+                    }
+                    if(dy > -450 && dx <= 350){
+                        dy = dy - 10;
+                    }
                 uArrow = "#808000";
                 break;
                 case 40://down
