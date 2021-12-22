@@ -8,9 +8,9 @@ function world() {
     var dir = 0;
     var tod = 0;
     var ice = 0;
-    var scene = 0;
+    var scene = 9;
     var hasKey = 0;
-    var hasLantern = 0;
+    var hasLantern = 1;
     var doorLock = 0;
     var labDoor = 0;
     var keyPad = 0;
@@ -36,7 +36,7 @@ function world() {
 
     var zeroG = 0;
     var map = 0;
-    var menu = 1;
+    var menu = 0;
     var sky = "#cceeff";
     var rArrow = "#ff0000";
     var lArrow = "#0099ff";
@@ -665,13 +665,25 @@ function world() {
             switch (event.keyCode) {
                 case 37: //left arrow key
                     lArrow = "#004d80";
+                    keyPad = 0;
                     dir = 2;
-                    if(dx > -450){
+                    if(dx == -490){
+                        scene = 10;
+                        dx = 500;
+                        dy = 0;
+                    }
+                    if(dy > -50){
+                        if(dx > -490){
+                            dx = dx - 10;
+                        }
+                    }
+                    if(dx > -300 && dy < -50){
                         dx = dx - 10;
                     }
                 break;
                 case 39: //right arrow key
                     rArrow = "#800000";
+                    keyPad = 0;
                     dir = 3;
                     if(dx < 490){
                         dx = dx + 10;
@@ -679,17 +691,24 @@ function world() {
                 break;
                 case 38://up
                 uArrow = "#808000";
+                keyPad = 0;
                     if(dy <= -490){
                         scene = 3;
                         dx = 340;
                         dy = 40;
                     }
-                    if(dy > -510){
+                    if(dx < -300){
+                        if(dy > -50){
+                            dy = dy - 10;
+                        }
+                    }
+                    if(dy > -510 && dx >= -300){
                         dy = dy - 10;
                     }
                 break;
                 case 40://down
                 dArrow = "#196619";
+                keyPad = 0;
                     if(dy < 0){
                         dy = dy + 10;
                     }
@@ -703,7 +722,12 @@ function world() {
                     keyPad = 1;
                 }
                 else{
-                    keyPad = 0;
+                    if(dx == 250){
+                        keyPad = 0;
+                    }
+                }
+                if(dx > 370 && dx < 450 && labDoor == 1){
+                    scene = 7;
                 }
                 break;
                 case 82://r
@@ -827,17 +851,72 @@ function world() {
                 break;
             }
         }
+        if(scene == 10){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                lArrow = "#004d80";
+                dir = 2;
+                if(dx > -450){
+                    dx = dx - 10;
+                }
+                break;
+                case 39: //right arrow key
+                rArrow = "#800000";
+                dir = 3;
+                if(dx < 490){
+                    dx = dx + 10;
+                }
+                break;
+                case 38://up
+                if(dy > -450){
+                    dy = dy - 10;
+                }
+                uArrow = "#808000";
+                break;
+                case 40://down
+                if(dy < 0){
+                    dy = dy + 10;
+                }
+                dArrow = "#196619";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
+                break;
+                case 77://Map
+                if(map == 0){
+                    map = 1;
+                }
+                else{
+                    map = 0;
+                }
+                break;
+            }
+        }
     }
     function ChangeColor() {
         switch (event.keyCode) {
         case 37: //left arrow key
-            if(scene == 3 || scene == 9){
+            if(scene == 3 || scene == 9 || scene == 10){
                 dir = 0;
             }
             lArrow = "#0099ff";
             break;
         case 39: //right arrow key
-            if(scene == 3 || scene == 9){
+            if(scene == 3 || scene == 9 || scene == 10){
                 dir = 1;
             }
             rArrow = "#ff0000";
@@ -958,6 +1037,7 @@ function world() {
         }
         if(l1 == 1 && l2 == 0 && l3 == 1 && l4 == 1 && l5 == 0 && l6 == 0 && l7 == 0 && l8 == 1 && l9 == 0 && l0 == 0){
             labDoor = 1;
+            keyPad = 0;
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -1413,6 +1493,12 @@ function world() {
             if(scene == 9){
                 drawRect(220,460,180,108, "grey");
             }
+            if(scene == 10){
+                drawRect(25,460,180,108, "grey");
+            }
+            if(scene == 11){
+                drawRect(415,70,180,108, "grey");
+            }
             tile(220,200,180,108,color,3);//2
             tile(415,200,180,108,color,3);//0
             tile(610,200,180,108,color,3);//1
@@ -1423,6 +1509,8 @@ function world() {
             tile(415,460,180,108,color,3);//7
             tile(25,200,180,108,color,3);//8
             tile(220,460,180,108,color,3);//9
+            tile(25,460,180,108,color,3);//10
+            tile(415,70,180,108,color,5);//11
         }
         function marker(){
             context.fillStyle = "red";
@@ -1468,6 +1556,9 @@ function world() {
             }
             if(scene == 9){
                 if(dx == 250){
+                    Location = 1;
+                }
+                if(dx > 370 && dx < 450){
                     Location = 1;
                 }
             }
@@ -2090,7 +2181,8 @@ function world() {
         if(scene == 9){
             drawDarkCave();
             drawRect(0,550,canvas.width,50,"#1b1b09");
-            drawRect(750,00,300,600,"#1b1b09");
+            drawRect(750,0,300,600,"#1b1b09");
+            drawRect(0,0,150,400,"#1b1b09");
             drawRect(765,450,20,30,"#556677");
             drawRect(768,453,14,24,"#8899aa");
             if(labDoor == 0){
@@ -2107,7 +2199,7 @@ function world() {
             Guy();
             stack.shift();//context.restore();
             if(hasLantern == 1){
-                drawDarkness();
+                //drawDarkness();
             }
             else{
                 drawRect(0,0,canvas.width,canvas.height,"black");
@@ -2165,10 +2257,72 @@ function world() {
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Scene Code Room
+// Scene Code Room/ELV
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 7){
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            clear();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+            if(map == 1){
+                drawMap("#ba1e68");
+            }
+            if(menu == 1){
+                drawMenu();
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Crystal Cave
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 10){
+            //arrows
+            DrawLArrow(lArrow);
+            DrawRArrow(rArrow);
+            DrawUArrow(uArrow);
+            DrawDArrow(dArrow);
+            DrawESCP();
+            clear();
+            //index key guy
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.scale(stack[0],stack[0],[0.3,.3]);
+            mat3.translate(stack[0],stack[0],[-281,-303]);
+            Guy();
+            stack.shift();//context.restore();
+            //main character
+            stack.unshift(mat3.clone(stack[0]));//context.save();
+            mat3.translate(stack[0],stack[0],[dx,dy]);
+            Guy();
+            stack.shift();//context.restore();
+            if(map == 1){
+                drawMap("#ba1e68");
+            }
+            if(menu == 1){
+                drawMenu();
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Scene Desert
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(scene == 11){
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
