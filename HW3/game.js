@@ -2314,8 +2314,8 @@ function world() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 10){
             drawCrystalCave();
-            drawRect(850,0,150,400,"#303336");
-            drawRect(0,550,canvas.width,50,"#303336");
+            drawRect(850,0,150,400,"#0c1a27");
+            drawRect(0,550,canvas.width,50,"#0c1a27");
             //main character
             stack.unshift(mat3.clone(stack[0]));//context.save();
             mat3.translate(stack[0],stack[0],[dx,dy]);
