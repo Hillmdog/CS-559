@@ -1412,6 +1412,12 @@ function world() {
             crystalCave.src = 'photos/crystalCave.png';
             context.drawImage(crystalCave, 0, 0, 1000, 600);
         }
+        function drawDesert(){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            desertBackground = new Image();
+            desertBackground.src = 'photos/desertBackground.png';
+            context.drawImage(desertBackground, 0, 0, 1000, 600);
+        }
         function drawCode(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             code = new Image();
@@ -2445,6 +2451,8 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 11){
+            drawDesert();
+            drawRect(0,550,canvas.width,50,"#804000");
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
