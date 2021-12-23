@@ -33,7 +33,7 @@ function world() {
     var l8 = 0;
     var l9 = 0;
     var l0 = 0;
-
+    var moved = 0;
     var zeroG = 0;
     var map = 0;
     var menu = 0;
@@ -809,7 +809,9 @@ function world() {
                 case 39: //right arrow key
                     rArrow = "#800000";
                     dir = 1;
-                    dx = dx + 10
+                    if(dx < 490){
+                        dx = dx + 10;
+                    }
                 break;
                 case 38://up
                 uArrow = "#808000";
@@ -822,6 +824,10 @@ function world() {
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
+                if(dx> -10 && dx < 100){
+                    moved = 0;
+                    scene = 11;
+                }
                 break;
                 case 82://r
                 location.href='intro.html'
@@ -892,6 +898,60 @@ function world() {
                 break;
                 case 32://space bar
                 SpaceBar = "#1a1a1a";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 27://esc
+                if(menu == 0){
+                    menu = 1;
+                }
+                else{
+                    menu = 0;
+                }
+                break;
+                case 77://Map
+                if(map == 0){
+                    map = 1;
+                }
+                else{
+                    map = 0;
+                }
+                break;
+            }
+        }
+        if(scene == 11){
+            switch (event.keyCode) {
+                case 37: //left arrow key
+                    lArrow = "#004d80";
+                    dir = 0;
+                    moved = 1;
+                    if(dx > -450){
+                        dx = dx - 10;
+                    }
+                break;
+                case 39: //right arrow key
+                    rArrow = "#800000";
+                    dir = 1;
+                    moved = 1;
+                    if(dx < 490){
+                        dx = dx + 10;
+                    }
+                break;
+                case 38://up
+                uArrow = "#808000";
+                break;
+                case 40://down
+                dArrow = "#196619";
+                break;
+                case 82://r
+                location.href='intro.html'
+                break;
+                case 32://space bar
+                SpaceBar = "#1a1a1a";
+                if(dx> -10 && dx < 100 && moved == 1){
+                    scene = 7;
+                }
                 break;
                 case 82://r
                 location.href='intro.html'
@@ -1540,7 +1600,9 @@ function world() {
             tile(25,200,180,108,color,3);//8
             tile(220,460,180,108,color,3);//9
             tile(25,460,180,108,color,3);//10
-            tile(415,70,180,108,color,5);//11
+            tile(415,70,180,108,color,3);//11
+
+            drawRect(0,0,0,0,"#6b532e");
         }
         function marker(){
             context.fillStyle = "red";
@@ -1589,6 +1651,16 @@ function world() {
                     Location = 1;
                 }
                 if(dx > 370 && dx < 450){
+                    Location = 1;
+                }
+            }
+            if(scene == 7){
+                if(dx > -10 && dx < 100){
+                    Location = 1;
+                }
+            }
+            if(scene == 11){
+                if(dx > -10 && dx < 100){
                     Location = 1;
                 }
             }
@@ -2392,7 +2464,7 @@ function world() {
             Guy();
             stack.shift();//context.restore();
             if(map == 1){
-                drawMap("#ba1e68");
+                drawMap("black");
             }
             if(menu == 1){
                 drawMenu();
