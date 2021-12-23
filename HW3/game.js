@@ -8,9 +8,9 @@ function world() {
     var dir = 0;
     var tod = 0;
     var ice = 0;
-    var scene = 9;
+    var scene = 7;
     var hasKey = 0;
-    var hasLantern = 1;
+    var hasLantern = 0;
     var doorLock = 0;
     var labDoor = 0;
     var keyPad = 0;
@@ -685,7 +685,11 @@ function world() {
                     rArrow = "#800000";
                     keyPad = 0;
                     dir = 3;
-                    if(dx < 490){
+                    if(dx == 510){
+                        scene = 7;
+                        dx = -500;
+                    }
+                    if(dx < 510){
                         dx = dx + 10;
                     }
                 break;
@@ -795,34 +799,23 @@ function world() {
             switch (event.keyCode) {
                 case 37: //left arrow key
                     lArrow = "#004d80";
-                    dir = 2;
-                    if(dx > -450){
-                        dx = dx - 10;
+                    dir = 0;
+                    dx = dx - 10;
+                    if(dx == - 490){
+                        scene = 9;
+                        dx = 500;
                     }
                 break;
                 case 39: //right arrow key
                     rArrow = "#800000";
-                    dir = 3;
-                    if(dx < 490){
-                        dx = dx + 10;
-                    }
+                    dir = 1;
+                    dx = dx + 10
                 break;
                 case 38://up
                 uArrow = "#808000";
-                    if(dy <= -490){
-                        scene = 3;
-                        dx = 340;
-                        dy = 40;
-                    }
-                    if(dy > -510){
-                        dy = dy - 10;
-                    }
                 break;
                 case 40://down
                 dArrow = "#196619";
-                    if(dy < 0){
-                        dy = dy + 10;
-                    }
                 break;
                 case 82://r
                 location.href='intro.html'
@@ -1449,6 +1442,22 @@ function world() {
             context.lineTo(movex + 2000 + 500,movey + 1000 + 500);//top right
             context.lineTo(movex + 2000 + 500,movey + 500);//right
             context.lineTo(movex - 20 + 500,movey + 500);//end
+            context.fill();
+        }
+        function drawElevator(){
+            context.fillStyle = "#2a333c";
+            context.beginPath();
+            //up
+            context.moveTo(610,430);
+            context.lineTo(620,430);
+            context.lineTo(615,420);
+            context.lineTo(610,430);
+            context.fill();
+            //down
+            context.moveTo(610,435);
+            context.lineTo(620,435);
+            context.lineTo(615,445);
+            context.lineTo(610,435);
             context.fill();
         }
         function drawKey(){
@@ -2282,6 +2291,16 @@ function world() {
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(scene == 7){
+            drawRect(0,0,canvas.width,canvas.height,"#8899aa");//background
+            drawRect(0,550,canvas.width,50,"#556677");//floor
+            drawRect(425,300,200,250,"#3f4d5a");//outline
+            drawRect(445,320,160,230,"#8899aa");//doors
+            drawRect(525,320,5,230,"#2a333c");//line
+            drawRect(475,270,100,30,"#3f4d5a");//top
+            drawRect(490,280,20,20,"#2a333c");//floors
+            drawRect(515,280,20,20,"#2a333c");//floors
+            drawRect(540,280,20,20,"#2a333c");//floors
+            drawElevator();
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
