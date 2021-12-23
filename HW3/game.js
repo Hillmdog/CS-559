@@ -2453,6 +2453,14 @@ function world() {
         if(scene == 11){
             drawDesert();
             drawRect(0,550,canvas.width,50,"#804000");
+            drawRect(425,300,200,250,"#3f4d5a");//outline
+            drawRect(445,320,160,230,"#8899aa");//doors
+            drawRect(525,320,5,230,"#2a333c");//line
+            drawRect(475,270,100,30,"#3f4d5a");//top
+            drawRect(490,280,20,20,"#2a333c");//floors
+            drawRect(515,280,20,20,"#2a333c");//floors
+            drawRect(540,280,20,20,"#2a333c");//floors
+            drawElevator();
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
