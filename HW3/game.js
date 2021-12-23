@@ -2385,6 +2385,10 @@ function world() {
             drawRect(490,280,20,20,"#2a333c");//floors
             drawRect(515,280,20,20,"#2a333c");//floors
             drawRect(540,280,20,20,"#2a333c");//floors
+            drawRect(350,430,50,70,"#3f4d5a");//boxoutline
+            drawRect(355,435,40,60,"#5f7386");//boxoutline
+            drawRect(372.5,500,5,30,"#3f4d5a");//line
+            drawRect(372.5,530,60,5,"#3f4d5a");//line
             drawElevator();
             //arrows
             DrawLArrow(lArrow);
