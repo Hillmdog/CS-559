@@ -1340,6 +1340,7 @@ function world() {
             spacePortal.src = 'photos/spacePortal.png';
             context.drawImage(spacePortal, 820, 120, 180, 420);
         }
+
         function drawMenu(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
             book = new Image();
@@ -1369,6 +1370,12 @@ function world() {
             head = new Image();
             head.src = 'photos/head.png';
             context.drawImage(head, x, y, 120, 240);
+        }
+        function drawCactus(x,y){
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            cactus = new Image();
+            cactus.src = 'photos/cactus.png';
+            context.drawImage(cactus, x, y, 200, 200);
         }
         function drawBoat(){
             context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
@@ -2461,6 +2468,8 @@ function world() {
             drawRect(515,280,20,20,"#2a333c");//floors
             drawRect(540,280,20,20,"#2a333c");//floors
             drawElevator();
+            drawCactus(150,350);
+            drawCactus(790,350);
             //arrows
             DrawLArrow(lArrow);
             DrawRArrow(rArrow);
